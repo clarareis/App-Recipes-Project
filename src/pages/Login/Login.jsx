@@ -25,10 +25,10 @@ function Login({ history }) {
   };
 
   const sigin = () => {
+    history.push('/foods');
     updateLocalStore('user', { email: userData.email });
     updateLocalStore('mealsToken', 1);
     updateLocalStore('cocktailsToken', 1);
-    history.push('/foods');
   };
 
   useEffect(() => {
