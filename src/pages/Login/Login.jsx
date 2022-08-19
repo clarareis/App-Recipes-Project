@@ -16,14 +16,6 @@ function Login({ history }) {
 
   const handleUserData = ({ name, value }) => setuserData({ ...userData, [name]: value });
 
-  const verifyUserData = () => {
-    if (emailVerification(userData.email) && passwordVerification(userData.password)) {
-      setDisabledButton(false);
-      return;
-    }
-    setDisabledButton(true);
-  };
-
   const sigin = () => {
     history.push('/foods');
     updateLocalStore('user', { email: userData.email });
@@ -32,6 +24,13 @@ function Login({ history }) {
   };
 
   useEffect(() => {
+    const verifyUserData = () => {
+      if (emailVerification(userData.email) && passwordVerification(userData.password)) {
+        setDisabledButton(false);
+        return;
+      }
+      setDisabledButton(true);
+    };
     verifyUserData();
   }, [userData]);
 
