@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import propTypes from 'prop-types';
 import {
   emailVerification,
   passwordVerification,
 } from '../../verifyUserData/emailAndPAsswordVerification';
+import { updateLocalStore } from '../../LocalStore/LocalStore';
 
-function Login() {
+function Login({ history }) {
   const [userData, setuserData] = useState({
     email: '',
     password: '',
@@ -20,6 +22,13 @@ function Login() {
       return;
     }
     setDisabledButton(true);
+  };
+
+  const sigin = () => {
+    updateLocalStore('user', { email: userData.email });
+    updateLocalStore('mealsToken', 1);
+    updateLocalStore('cocktailsToken', 1);
+    history.push('/foods');
   };
 
   useEffect(() => {
@@ -50,6 +59,7 @@ function Login() {
           />
         </label>
         <button
+          onClick={ sigin }
           data-testid="login-submit-btn"
           disabled={ disabledButton }
           type="button"
@@ -60,5 +70,11 @@ function Login() {
     </section>
   );
 }
+
+Login.propTypes = {
+  history: propTypes.shape({
+    push: propTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Login;
