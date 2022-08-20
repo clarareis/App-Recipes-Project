@@ -19,6 +19,7 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
       alert('Your search must have only 1 (one) character');
     }
     const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
+    console.log(recipes);
     return recipes;
   };
 
@@ -89,7 +90,7 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
 SearchBar.propTypes = {
   nameOfItem: propTypes.string.isRequired,
   showSearch: propTypes.bool.isRequired,
-  setNameOfItem: propTypes.string.isRequired,
+  setNameOfItem: propTypes.func.isRequired,
 };
 
 export default SearchBar;
