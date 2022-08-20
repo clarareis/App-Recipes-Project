@@ -40,7 +40,7 @@ describe('test in search component', () => {
   });
 
   global.fetch = jest.fn(() => Promise.resolve({
-    json: () => Promise.resolve(ingredientMock),
+    json: () => Promise.resolve({ ...ingredientMock }),
   }));
 
   test('fetch is calles', async () => {
@@ -63,7 +63,7 @@ describe('test in search component', () => {
   });
 
   global.fetch = jest.fn(() => Promise.resolve({
-    json: () => Promise.resolve(nameMock),
+    json: () => Promise.resolve({ ...nameMock }),
   }));
 
   test('test if meal api is caled in food area with name filter selected', () => {
