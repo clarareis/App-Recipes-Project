@@ -1,6 +1,7 @@
 .header_content {
   align-items: center;
   display: flex;
+  flex-direction: column;
   height: 50px;
   justify-content: flex-start;
   position: fixed;

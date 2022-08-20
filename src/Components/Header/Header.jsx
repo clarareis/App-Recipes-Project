@@ -7,48 +7,58 @@ import SearchIcon from '../../images/searchIcon.svg';
 
 function Header({ headerName }) {
   const history = useHistory();
-  const [showSearch, setShowHeader] = useState(true);
+  const [showSearchBtn, setShowHeaderBtn] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     if (headerName === 'Done Recipes' || headerName === 'Profile'
-    || headerName === 'Favorite Recipes') return setShowHeader(false);
-    setShowHeader(true);
+    || headerName === 'Favorite Recipes') return setShowHeaderBtn(false);
+    setShowHeaderBtn(true);
   }, [headerName]);
 
   return (
     <header
       className="header_content"
     >
-      <button
-        onClick={ () => history.push('profile') }
-        type="button"
-      >
-        <img
-          data-testid="profile-top-btn"
-          alt="profileIcon"
-          src={ profileIcon }
-        />
-      </button>
-
-      {
-        showSearch && (
-          <button
-            type="button"
-          >
-            <img
-              data-testid="search-top-btn"
-              alt="profileIcon"
-              src={ SearchIcon }
-            />
-          </button>
-        )
-      }
-
       <h2
         data-testid="page-title"
       >
         { headerName }
       </h2>
+      <section>
+        <button
+          onClick={ () => history.push('profile') }
+          type="button"
+        >
+          <img
+            data-testid="profile-top-btn"
+            alt="profileIcon"
+            src={ profileIcon }
+          />
+        </button>
+
+        {
+          showSearchBtn && (
+            <button
+              onClick={ () => setShowSearch(!showSearch) }
+              type="button"
+            >
+              <img
+                data-testid="search-top-btn"
+                alt="profileIcon"
+                src={ SearchIcon }
+              />
+            </button>
+          )
+        }
+      </section>
+      {
+        showSearch && (
+          <input
+            data-testid="search-input"
+          />
+        )
+      }
     </header>
   );
 }
