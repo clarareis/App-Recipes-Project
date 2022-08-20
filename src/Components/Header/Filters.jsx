@@ -1,12 +1,17 @@
 /* eslint-disable no-alert */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 
 function Filters({ nameOfItem }) {
   const [filter, setFilter] = useState('');
-  const nowPath = useHistory().location.pathname;
+  const [nowPath, setNowpath] = useState('');
+  const history = useHistory();
+
+  useEffect(() => {
+    setNowpath(history.location.pathname.slice(1));
+  }, [history.location.pathname]);
 
   const getRecipes = async () => {
     if (filter === 'first-letter' && nameOfItem.length > 1) {

@@ -20,5 +20,5 @@ const getDrinksEndpoints = (filter, data) => {
 
 export const changeEndPointByFilterOrPage = (page, filter, data) => {
   if (page === 'foods') return getMealEndpoints(filter, data);
-  getDrinksEndpoints(filter, data);
+  return getDrinksEndpoints(filter, data);
 };
