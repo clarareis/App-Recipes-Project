@@ -55,16 +55,17 @@ describe('Testes na Pagina Inicial de Login', () => {
     jest.spyOn(global, 'fetch').mockResolvedValue({
       json: jest.fn().mockResolvedValue(),
     });
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId(emailInput);
     const senha = screen.getByTestId(SenhaInput);
     const button = screen.getByRole('button', { name: /enter/i });
 
     userEvent.type(email, 'test@test.com');
-    userEvent.type(senha, '123456');
+    userEvent.type(senha, '1234567');
 
     expect(button).toBeDefined();
     userEvent.click(button);
+    expect(history.location.pathname).toBe('/foods');
   });
 });

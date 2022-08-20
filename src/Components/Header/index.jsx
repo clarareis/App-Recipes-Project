@@ -37,6 +37,17 @@ function Header({ headerName }) {
           />
         </button>
 
+        <button
+          onClick={ () => history.push('done-recipes') }
+          type="button"
+        >
+          <img
+            data-testid="done-recipe-top-btn"
+            alt="profileIcon"
+            src={ profileIcon }
+          />
+        </button>
+
         {
           showSearchBtn && (
             <button
