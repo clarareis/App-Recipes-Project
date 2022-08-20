@@ -3,14 +3,10 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './RenderWith';
 import Header from '../Components/Header';
-import App from '../App';
 
 const searchInputId = 'search-input';
 const userBtnId = 'profile-top-btn';
 const showSearchBtnId = 'search-top-btn';
-const emailInput = 'email-input';
-const SenhaInput = 'password-input';
-const testEmail = 'test@test3.com';
 
 beforeEach(() => {
   jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
@@ -34,15 +30,7 @@ describe('Testando o componente Header', () => {
   });
 
   test('testa se o search é exibido em tela', () => {
-    renderWithRouterAndRedux(<App />);
-
-    const email = screen.getByTestId(emailInput);
-    const senha = screen.getByTestId(SenhaInput);
-    const button = screen.getByRole('button', { name: /enter/i });
-
-    userEvent.type(email, testEmail);
-    userEvent.type(senha, '1234567');
-    userEvent.click(button);
+    renderWithRouterAndRedux(<Header />);
 
     const search = screen.getByTestId(showSearchBtnId);
     userEvent.click(search);
@@ -53,26 +41,10 @@ describe('Testando o componente Header', () => {
   });
 
   test('testando se o userBtn redireciona para pagina de usuario', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
-    const email = screen.getByTestId(emailInput);
-    const senha = screen.getByTestId(SenhaInput);
-    const button = screen.getByRole('button', { name: /enter/i });
-
-    userEvent.type(email, 'test@test3.com');
-    userEvent.type(senha, '1234567');
-    userEvent.click(button);
+    const { history } = renderWithRouterAndRedux(<Header />);
 
     const userBtn = screen.getByTestId(userBtnId);
     userEvent.click(userBtn);
     expect(history.location.pathname).toBe('/profile');
-  });
-
-  test('testando se o searchBtn não aparece na tela de done recipes', async () => {
-    const { history } = renderWithRouterAndRedux(<Header headerName="Profile" />);
-    history.push('/done-recipes');
-    const goDoneRecipes = screen.getByTestId('done-recipe-top-btn');
-    userEvent.click(goDoneRecipes);
-    expect(history.location.pathname).toBe('/done-recipes');
-    setTimeout(() => expect(showSearchBtn).not.toBeInTheDocument(), 0);
   });
 });
