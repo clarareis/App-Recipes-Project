@@ -1,0 +1,17 @@
+.searchbar_container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.searchbar_container .radio_area {
+  display: flex;
+}
+
+.searchbar_container label {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+}

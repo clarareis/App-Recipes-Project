@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import SearchIcon from '../../images/searchIcon.svg';
-import Filters from './Filters';
+import SearchBar from '../SearchBar';
 
 function Header({ headerName }) {
   const history = useHistory();
@@ -54,16 +54,11 @@ function Header({ headerName }) {
           )
         }
       </section>
-      {
-        showSearch && (
-          <input
-            onChange={ ({ target }) => setNameOfItem(target.value) }
-            data-testid="search-input"
-            value={ nameOfItem }
-          />
-        )
-      }
-      <Filters nameOfItem={ nameOfItem } />
+      <SearchBar
+        setNameOfItem={ setNameOfItem }
+        showSearch={ showSearch }
+        nameOfItem={ nameOfItem }
+      />
     </header>
   );
 }
