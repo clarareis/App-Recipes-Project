@@ -1,7 +1,18 @@
+/* eslint-disable no-alert */
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
+import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 
-function Filters() {
+function Filters({ nameOfItem }) {
   const [filter, setFilter] = useState('');
+
+  const getRecipes = async () => {
+    if (filter === 'first-letter' && nameOfItem.length > 1) {
+      alert('Your search must have only 1 (one) character');
+    }
+    const recipes = await requestRecipesByfilter(filter, nameOfItem);
+    return recipes;
+  };
 
   return (
     <section>
@@ -12,7 +23,7 @@ function Filters() {
         <input
           id="ingredient"
           name="filter"
-          onChange={ ({ target }) => setFilter(target.name) }
+          onChange={ ({ target }) => setFilter(target.id) }
           data-testid="ingredient-search-radio"
           type="radio"
         />
@@ -37,12 +48,13 @@ function Filters() {
         <input
           id="first-letter"
           name="filter"
-          onChange={ ({ target }) => setFilter(target.name) }
+          onChange={ ({ target }) => setFilter(target.id) }
           data-testid="first-letter-search-radio"
           type="radio"
         />
       </label>
       <button
+        onClick={ getRecipes }
         data-testid="exec-search-btn"
         type="button"
       >
@@ -51,5 +63,9 @@ function Filters() {
     </section>
   );
 }
+
+Filters.propTypes = {
+  nameOfItem: propTypes.string.isRequired,
+};
 
 export default Filters;

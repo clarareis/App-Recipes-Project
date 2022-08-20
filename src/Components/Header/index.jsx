@@ -10,6 +10,7 @@ function Header({ headerName }) {
   const history = useHistory();
   const [showSearchBtn, setShowHeaderBtn] = useState(true);
   const [showSearch, setShowSearch] = useState(false);
+  const [nameOfItem, setNameOfItem] = useState('');
 
   useEffect(() => {
     if (headerName === 'Done Recipes' || headerName === 'Profile'
@@ -56,11 +57,13 @@ function Header({ headerName }) {
       {
         showSearch && (
           <input
+            onChange={ ({ target }) => setNameOfItem(target.value) }
             data-testid="search-input"
+            value={ nameOfItem }
           />
         )
       }
-      <Filters />
+      <Filters nameOfItem={ nameOfItem } />
     </header>
   );
 }
