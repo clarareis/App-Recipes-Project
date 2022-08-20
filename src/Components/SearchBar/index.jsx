@@ -14,11 +14,20 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
     setNowpath(history.location.pathname.slice(1));
   }, [history.location.pathname]);
 
-  const getRecipes = async () => {
+  const isAItem = (recipes) => {
+    if (recipes.length === 1) return history.push(`/${nowPath}/${recipes[0].idMeal}`);
+  };
+
+  const verifyIsALetter = () => {
     if (filter === 'first-letter' && nameOfItem.length > 1) {
       alert('Your search must have only 1 (one) character');
     }
+  };
+
+  const getRecipes = async () => {
+    verifyIsALetter();
     const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
+    isAItem(recipes);
     console.log(recipes);
     return recipes;
   };
