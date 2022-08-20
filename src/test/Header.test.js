@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor, waitForElement } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './RenderWith';
 import Header from '../Components/Header';
@@ -45,6 +45,16 @@ describe('Testando o componente Header', () => {
 
     const userBtn = screen.getByTestId(userBtnId);
     userEvent.click(userBtn);
+    expect(history.location.pathname).toBe('/profile');
+  });
+
+  test('testando se search aparece na pagina de profile', async () => {
+    const { history } = renderWithRouterAndRedux(<Header
+      headerName="Favorite Recipes"
+    />);
+
+    const userBtn = screen.getByTestId(userBtnId);
+    await userEvent.click(userBtn);
     expect(history.location.pathname).toBe('/profile');
   });
 });
