@@ -1,0 +1,8 @@
+.header_content {
+  align-items: center;
+  display: flex;
+  height: 50px;
+  justify-content: flex-start;
+  position: fixed;
+  top: 0;
+}

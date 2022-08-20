@@ -1,8 +1,10 @@
 import React from 'react';
+import Header from '../../Components/Header/Header';
 
 function FavoriteRecipe() {
   return (
     <section>
+      <Header headerName="Favorite Recipes" />
       <h1>FavoriteRecipe</h1>
     </section>
   );
