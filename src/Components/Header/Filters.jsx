@@ -1,16 +1,18 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 
 function Filters({ nameOfItem }) {
   const [filter, setFilter] = useState('');
+  const nowPath = useHistory().location.pathname;
 
   const getRecipes = async () => {
     if (filter === 'first-letter' && nameOfItem.length > 1) {
       alert('Your search must have only 1 (one) character');
     }
-    const recipes = await requestRecipesByfilter(filter, nameOfItem);
+    const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
     return recipes;
   };
 
