@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import SearchIcon from '../../images/searchIcon.svg';
+import Filters from './Filters';
 
 function Header({ headerName }) {
   const history = useHistory();
@@ -59,6 +60,7 @@ function Header({ headerName }) {
           />
         )
       }
+      <Filters />
     </header>
   );
 }
