@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
+import { isAItem } from './verifyData';
 
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const [filter, setFilter] = useState('');
@@ -14,9 +15,9 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
     setNowpath(history.location.pathname.slice(1));
   }, [history.location.pathname]);
 
-  const isAItem = (recipes) => {
-    if (recipes.length === 1) return history.push(`/${nowPath}/${recipes[0].idMeal}`);
-  };
+  // const isAItem = (recipes) => {
+  //   if (recipes.length === 1) return history.push(`/${nowPath}/${recipes[0].idMeal}`);
+  // };
 
   const verifyIsALetter = () => {
     if (filter === 'first-letter' && nameOfItem.length > 1) {
@@ -27,9 +28,8 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const getRecipes = async () => {
     verifyIsALetter();
     const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
-    isAItem(recipes);
     console.log(recipes);
-    return recipes;
+    isAItem(recipes, history, nowPath);
   };
 
   return (
