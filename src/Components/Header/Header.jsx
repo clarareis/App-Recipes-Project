@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 import propTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import SearchIcon from '../../images/searchIcon.svg';
 
 function Header({ headerName }) {
+  const history = useHistory();
   const [showSearch, setShowHeader] = useState(true);
 
   useEffect(() => {
@@ -18,6 +20,7 @@ function Header({ headerName }) {
       className="header_content"
     >
       <button
+        onClick={ () => history.push('profile') }
         type="button"
       >
         <img
@@ -52,6 +55,7 @@ function Header({ headerName }) {
 
 Header.propTypes = {
   headerName: propTypes.string.isRequired,
+  history: propTypes.node.isRequired,
 };
 
 export default Header;
