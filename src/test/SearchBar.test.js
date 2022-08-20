@@ -86,7 +86,9 @@ describe('test in search component', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
+  // https://stackoverflow.com/questions/53611098/how-can-i-mock-the-window-alert-method-in-jest
   jest.spyOn(window, 'alert').mockImplementation(() => {});
+
   test(`verify if alert is called case first latter filter
     with active and input have more one latter`, async () => {
     renderWithRouterAndRedux(
