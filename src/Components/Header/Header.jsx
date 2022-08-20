@@ -65,7 +65,6 @@ function Header({ headerName }) {
 
 Header.propTypes = {
   headerName: propTypes.string.isRequired,
-  history: propTypes.node.isRequired,
 };
 
 export default Header;
