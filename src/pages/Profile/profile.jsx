@@ -3,7 +3,6 @@ import Header from '../../Components/Header';
 import './Profile.css';
 import Footer from '../../components/Footer/Footer';
 
-
 function profile() {
   return (
     <section
