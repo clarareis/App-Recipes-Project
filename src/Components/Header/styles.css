@@ -1,0 +1,28 @@
+.header_content {
+  align-items: center;
+  background-color: rgb(14, 163, 107);
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  justify-content: flex-start;
+  position: fixed;
+  top: 0;
+  width: 360px;
+}
+
+.header_content h2 {
+  font-size: 1.5rem;
+}
+
+.top_area {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.top_area_profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

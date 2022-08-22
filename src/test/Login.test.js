@@ -51,8 +51,11 @@ describe('Testes na Pagina Inicial de Login', () => {
     expect(pratosToken).toBeDefined();
     expect(drinksToken).toBeDefined();
   });
-  test('É renderizado um botão que te manda para outro local', () => {
-    renderWithRouterAndRedux(<App />);
+  test('É renderizado um botão que te manda para outro local', async () => {
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue(),
+    });
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId(emailInput);
     const senha = screen.getByTestId(SenhaInput);
@@ -62,5 +65,6 @@ describe('Testes na Pagina Inicial de Login', () => {
     userEvent.type(senha, '1234567');
 
     userEvent.click(button);
+    expect(history.location.pathname).toBe('/foods');
   });
 });

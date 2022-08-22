@@ -1,12 +1,16 @@
 import React from 'react';
-import Footer from '../../components/Footer/Footer';
+import Header from '../../Components/Header';
+import Recipes from '../../Components/Recipes';
+import './Foods.css';
 
 function Foods() {
   return (
-    <>
-      <h1>Foods</h1>
-      <Footer />
-    </>
+    <section
+      className="foods_content"
+    >
+      <Header headerName="Foods" />
+      <Recipes recipeType="Foods" />
+    </section>
   );
 }
 
