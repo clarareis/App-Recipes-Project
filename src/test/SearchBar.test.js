@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './RenderWith';
 import Header from '../Components/Header';
-import { ingredientMock } from '../../_Mocks/SearchMock';
+import { ingredientMock, nameMock } from '../../_Mocks/SearchMock';
 import App from '../App';
 
 const searchInputId = 'search-input';
@@ -63,10 +63,6 @@ describe('test in search component', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  global.fetch = jest.fn(() => Promise.resolve({
-    json: () => Promise.resolve(),
-  }));
-
   test('test if meal api is caled in food area with name filter selected', () => {
     renderWithRouterAndRedux(<Header
       headerName="foods"
@@ -113,6 +109,9 @@ describe('test in search component', () => {
   });
 
   test('fetch is redirect for id page in case de api return one item', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(nameMock.meals),
+    }));
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/foods');
 
@@ -126,6 +125,5 @@ describe('test in search component', () => {
     userEvent.type(searchInput, 'Arrabiata');
     userEvent.click(nameBtn);
     userEvent.click(searchBtn);
-    expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
