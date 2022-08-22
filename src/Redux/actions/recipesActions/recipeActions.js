@@ -1,9 +1,9 @@
 import { requestRecipesByfilter } from '../../../services/fetchFoodsAndDrinks';
-import { MAX_RECIPES_CARDS, SET_RECIPES } from '../../types/reduxTypes';
+import { MAX_RECIPES_CARDS, SET_FILTER_RECIPES } from '../../types/reduxTypes';
 
-export const setRecipes = (recipes) => ({
-  type: SET_RECIPES,
-  recipes,
+export const setRecipes = (filtedRecipes) => ({
+  type: SET_FILTER_RECIPES,
+  filtedRecipes,
 });
 
 export const fetchRecipes = (nowPath, filter, nameOfItem) => async (dispatch) => {
