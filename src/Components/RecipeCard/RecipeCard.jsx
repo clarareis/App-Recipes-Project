@@ -1,5 +1,6 @@
 import React from 'react';
 import './card.css';
+import propTypes from 'prop-types';
 
 function RecipeCard({ recipe, index }) {
   return (
@@ -16,5 +17,13 @@ function RecipeCard({ recipe, index }) {
     </button>
   );
 }
+
+RecipeCard.propTypes = {
+  recipe: propTypes.shape({
+    strMeal: propTypes.string.isRequired,
+    strMealThumb: propTypes.string.isRequired,
+  }).isRequired,
+  index: propTypes.number.isRequired,
+};
 
 export default RecipeCard;
