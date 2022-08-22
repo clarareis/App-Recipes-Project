@@ -2,22 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
+import { useDispatch } from 'react-redux';
+// import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
 import { isAItem } from './verifyData';
+import { fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
 
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const [filter, setFilter] = useState('');
   const [nowPath, setNowpath] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setNowpath(history.location.pathname.slice(1));
   }, [history.location.pathname]);
-
-  // const isAItem = (recipes) => {
-  //   if (recipes.length === 1) return history.push(`/${nowPath}/${recipes[0].idMeal}`);
-  // };
 
   const verifyIsALetter = () => {
     if (filter === 'first-letter' && nameOfItem.length > 1) {
@@ -27,8 +26,8 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
 
   const getRecipes = async () => {
     verifyIsALetter();
-    const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
-    console.log(recipes);
+    dispatch(fetchRecipes(nowPath, filter, nameOfItem));
+    // const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
     isAItem(recipes, history, nowPath);
   };
 

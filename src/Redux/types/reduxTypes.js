@@ -1,2 +1,3 @@
-export const FETCH_FOODS = 'FETCH_FOODS';
-export const FETCH_DRINKS = 'FETCH_DRINKS';
+export const SET_RECIPES = 'SET_RECIPES';
+export const FILTER_RECIPES = 'FILTER_RECIPES';
+export const MAX_RECIPES_CARDS = 11;

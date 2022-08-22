@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 export const isAItem = (recipes, history, nowPath) => {
   if (recipes.length === 1) {
     if (nowPath === 'foods') {
