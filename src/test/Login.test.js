@@ -64,7 +64,6 @@ describe('Testes na Pagina Inicial de Login', () => {
     userEvent.type(email, 'test@test.com');
     userEvent.type(senha, '1234567');
 
-    expect(button).toBeDefined();
     userEvent.click(button);
     expect(history.location.pathname).toBe('/foods');
   });
