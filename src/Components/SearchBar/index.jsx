@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
 import { isAItem } from './verifyData';
+import { useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
 
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
@@ -25,8 +26,9 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
 
   const getRecipes = async () => {
     verifyIsALetter();
-    dispatch(fetchRecipes(nowPath, filter, nameOfItem));
+    const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
     isAItem(recipes, history, nowPath);
+    dispatch(fetchRecipes(recipes));
   };
 
   return (
