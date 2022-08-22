@@ -1,0 +1,10 @@
+.recipes_container {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  height: 65%;
+  justify-content: flex-start;
+  margin-top: 35%;
+  overflow: scroll;
+  width: 100%;
+}

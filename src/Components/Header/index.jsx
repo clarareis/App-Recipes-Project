@@ -16,18 +16,14 @@ function Header({ headerName }) {
     if (headerName === 'Done Recipes' || headerName === 'Profile'
     || headerName === 'Favorite Recipes') return setShowHeaderBtn(false);
     setShowHeaderBtn(true);
+    console.log(headerName);
   }, [headerName]);
 
   return (
     <header
       className="header_content"
     >
-      <h2
-        data-testid="page-title"
-      >
-        { headerName }
-      </h2>
-      <section>
+      <section className={ headerName === 'Profile' ? 'top_area_profile' : 'top_area' }>
         <button
           onClick={ () => history.push('profile') }
           type="button"
@@ -38,6 +34,11 @@ function Header({ headerName }) {
             src={ profileIcon }
           />
         </button>
+        <h2
+          data-testid="page-title"
+        >
+          { headerName }
+        </h2>
 
         {
           showSearchBtn && (
@@ -54,11 +55,15 @@ function Header({ headerName }) {
           )
         }
       </section>
-      <SearchBar
-        setNameOfItem={ setNameOfItem }
-        showSearch={ showSearch }
-        nameOfItem={ nameOfItem }
-      />
+      {
+        headerName !== 'Profile' && (
+          <SearchBar
+            setNameOfItem={ setNameOfItem }
+            showSearch={ showSearch }
+            nameOfItem={ nameOfItem }
+          />
+        )
+      }
     </header>
   );
 }

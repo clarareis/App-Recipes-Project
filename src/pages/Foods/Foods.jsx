@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../Components/Header';
+import Recipes from '../../Components/Recipes';
 import './Foods.css';
 
 function Foods() {
@@ -8,7 +9,7 @@ function Foods() {
       className="foods_content"
     >
       <Header headerName="Foods" />
-      <h1>Foods</h1>
+      <Recipes />
     </section>
   );
 }
