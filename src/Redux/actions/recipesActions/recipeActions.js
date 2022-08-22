@@ -1,7 +1,6 @@
 /* eslint-disable no-alert */
 // import { requestRecipesByfilter } from '../../../services/fetchFoodsAndDrinks';
-import { requestRecipesByfilter,
-  requestRecipesList } from '../../../services/fetchFoodsAndDrinks';
+import { requestRecipesList } from '../../../services/fetchFoodsAndDrinks';
 import { MAX_RECIPES_CARDS,
   SET_FILTER_RECIPES,
   SET_RECIPES_LIST } from '../../types/reduxTypes';
