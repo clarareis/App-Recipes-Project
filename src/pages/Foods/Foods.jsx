@@ -9,7 +9,7 @@ function Foods() {
       className="foods_content"
     >
       <Header headerName="Foods" />
-      <Recipes />
+      <Recipes recipeType="Foods" />
     </section>
   );
 }

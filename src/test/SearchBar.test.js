@@ -14,9 +14,6 @@ const nameBtnId = 'name-search-radio';
 const firsLetterBtnId = 'first-letter-search-radio';
 const searchBtnId = 'exec-search-btn';
 
-const emailInput = 'email-input';
-const SenhaInput = 'password-input';
-
 beforeEach(() => {
   fetch.mockClear();
 });
@@ -90,11 +87,10 @@ describe('test in search component', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  // https://stackoverflow.com/questions/53611098/how-can-i-mock-the-window-alert-method-in-jest
-  jest.spyOn(window, 'alert').mockImplementation(() => {});
-
   test(`verify if alert is called case first latter filter
     with active and input have more one latter`, async () => {
+    // https://stackoverflow.com/questions/53611098/how-can-i-mock-the-window-alert-method-in-jest
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
     renderWithRouterAndRedux(
       <Header
         headerName="foods"
@@ -113,24 +109,12 @@ describe('test in search component', () => {
     userEvent.click(firstLatter);
     userEvent.click(searchBtn);
 
-    // expect(alert).toHaveBeenCalled();
+    expect(alert).toHaveBeenCalled();
   });
 
   test('fetch is redirect for id page in case de api return one item', async () => {
-    renderWithRouterAndRedux(<App />);
-
-    const email = screen.getByTestId(emailInput);
-    const senha = screen.getByTestId(SenhaInput);
-    const button = screen.getByRole('button', { name: /enter/i });
-
-    userEvent.type(email, 'test@test3.com');
-    userEvent.type(senha, '123456');
-
-    expect(button).toBeDisabled();
-
-    userEvent.type(senha, '1234567');
-    expect(button).not.toBeDisabled();
-    userEvent.click(button);
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/foods');
 
     const nameBtn = screen.getByTestId(nameBtnId);
     const searchBtn = screen.getByTestId(searchBtnId);

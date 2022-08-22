@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../Components/Header';
+import Recipes from '../../Components/Recipes';
 import './Drinks.css';
 
 function Drinks() {
@@ -8,7 +9,7 @@ function Drinks() {
       className="drinks_content"
     >
       <Header headerName="Drinks" />
-      <h1>Drinks</h1>
+      <Recipes recipeType="Drinks" />
     </section>
   );
 }
