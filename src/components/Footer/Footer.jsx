@@ -1,36 +1,28 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import drinkOne from '../../images/drinkIcon.svg';
 import drinkTwo from '../../images/mealIcon.svg';
+import './footerStyle.css';
 
 function Footer() {
-  const pushForDrinks = () => {
-    window.location.href = './drinks';
-  };
-  const pushForFoods = () => {
-    window.location.href = './foods';
-  };
   return (
-    <footer data-testid="footer">
-      <button
-        type="button"
-        onClick={ pushForDrinks }
-      >
+    <footer className="footer" data-testid="footer">
+      <Link to="./drinks">
         <img
           alt="Drink"
           data-testid="drinks-bottom-btn"
           src={ drinkOne }
         />
-      </button>
-      <button
-        type="button"
-        onClick={ pushForFoods }
-      >
+      </Link>
+      <Link to="./foods">
+
         <img
           alt="Drinktwo"
           data-testid="food-bottom-btn"
           src={ drinkTwo }
         />
-      </button>
+      </Link>
+
     </footer>
   );
 }
