@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
-import { isAItem } from './verifyData';
 import { fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
 
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
@@ -27,13 +26,10 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const getRecipes = async () => {
     verifyIsALetter();
     const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
-    if (!recipes) {
-      const message = 'Sorry, we haven\'t found any recipes for these filters.';
-      alert(message);
-      return;
-    }
-    isAItem(recipes, history, nowPath);
-    dispatch(fetchRecipes(nowPath, filter, nameOfItem));
+    const dispatchParams = {
+      nowPath, filter, nameOfItem, history, recipes,
+    };
+    dispatch(fetchRecipes(dispatchParams));
   };
 
   return (
