@@ -8,8 +8,6 @@ import './SearchBar.css';
 import { isAItem } from './verifyData';
 import { fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
 
-const message = 'Sorry, we haven\'t found any recipes for these filters';
-
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const [filter, setFilter] = useState('');
   const [nowPath, setNowpath] = useState('');
@@ -30,11 +28,12 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
     verifyIsALetter();
     const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
     if (!recipes) {
+      const message = 'Sorry, we haven\'t found any recipes for these filters.';
       alert(message);
       return;
     }
     isAItem(recipes, history, nowPath);
-    dispatch(fetchRecipes(recipes));
+    dispatch(fetchRecipes(nowPath, filter, nameOfItem));
   };
 
   return (

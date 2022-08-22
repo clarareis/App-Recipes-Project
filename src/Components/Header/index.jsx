@@ -55,15 +55,11 @@ function Header({ headerName }) {
           )
         }
       </section>
-      {
-        headerName !== 'Profile' && (
-          <SearchBar
-            setNameOfItem={ setNameOfItem }
-            showSearch={ showSearch }
-            nameOfItem={ nameOfItem }
-          />
-        )
-      }
+      <SearchBar
+        setNameOfItem={ setNameOfItem }
+        showSearch={ showSearch }
+        nameOfItem={ nameOfItem }
+      />
     </header>
   );
 }
