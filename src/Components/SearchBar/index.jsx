@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
+import { requestCategorys, requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
 import { fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
 
@@ -12,10 +12,22 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const [nowPath, setNowpath] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
+  const [categorys, setCategorys] = useState([]);
+  const [currentCategoryReference, setCurrentCategoryReference] = useState('');
 
   useEffect(() => {
     setNowpath(history.location.pathname.slice(1));
   }, [history.location.pathname]);
+
+  const requestCategory = async () => {
+    const nowCategorys = await requestCategorys(history.location.pathname);
+    setCategorys(nowCategorys);
+    console.log(nowCategorys);
+  };
+
+  useEffect(() => {
+    requestCategory();
+  }, []);
 
   const verifyIsALetter = () => {
     if (filter === 'first-letter' && nameOfItem.length > 1) {
@@ -92,6 +104,30 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
       >
         Buscar
       </button>
+
+      <section
+        className="category_area"
+      >
+        {
+          categorys.length && categorys.map((currentCategory) => (
+            <button
+              style={ {
+                backgroundColor: currentCategory.strCategory === currentCategoryReference
+                  ? '#303030' : '#fff',
+              } }
+              onClick={ () => setCurrentCategoryReference(
+                currentCategory.strCategory === currentCategoryReference ? ''
+                  : currentCategory.strCategory,
+              ) }
+              data-testid="exec-search-btn"
+              type="button"
+              key={ currentCategory.strCategory }
+            >
+              {currentCategory.strCategory}
+            </button>
+          ))
+        }
+      </section>
     </section>
   );
 }

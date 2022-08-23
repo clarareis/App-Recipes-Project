@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 10px;
 }
 
 .searchbar_container .radio_area {
@@ -14,4 +13,18 @@
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
+}
+
+.category_area {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+  justify-content: center;
+  width: 360px;
+}
+
+.category_area button {
+  font-size: 14px;
+  padding: 1px;
 }

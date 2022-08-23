@@ -1,5 +1,9 @@
-import { DRINK_LIST_ENDPOINT, MEAL_LIST_ENDPOINT } from './endpointsTypes';
-import { changeEndPointByFilterOrPage } from './_end_points';
+import { MAX_CATEGORY } from '../Redux/types/reduxTypes';
+import { DRINKS_CATEGORYS_ENDPOINT,
+  DRINK_LIST_ENDPOINT,
+  MEAL_CATEGORYS_ENDPOINT,
+  MEAL_LIST_ENDPOINT } from './endpointsTypes';
+import { changeCategoryEndPoins, changeEndPointByFilterOrPage } from './_end_points';
 
 export const requestRecipesByfilter = async (page, filter, data) => {
   try {
@@ -21,7 +25,6 @@ const endpointByPath = (path) => {
 };
 
 export const requestRecipesList = async (path) => {
-  console.log(path);
   try {
     const recipeApiResponse = await fetch(endpointByPath(path));
     const successRecipesRequest = await recipeApiResponse.json();
@@ -32,4 +35,13 @@ export const requestRecipesList = async (path) => {
   }
 };
 
-export const lintKiler = async () => {};
+export const requestCategorys = async (path) => {
+  try {
+    const fetchCategories = await fetch(changeCategoryEndPoins(path));
+    const successFetchCategories = await fetchCategories.json();
+    if (path === '/drinks') return successFetchCategories.drinks.slice(0, MAX_CATEGORY);
+    return successFetchCategories.meals.slice(0, MAX_CATEGORY);
+  } catch (error) {
+    console.log(error);
+  }
+};

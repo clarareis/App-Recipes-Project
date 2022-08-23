@@ -1,7 +1,9 @@
 import {
+  DRINKS_CATEGORYS_ENDPOINT,
   DRINK_FIRST_LETTER_ENDPOINT,
   DRINK_INGREDIENT_ENDPOINT,
   DRINK_NAME_ENDPOINT,
+  MEAL_CATEGORYS_ENDPOINT,
   MEAL_FIRST_LETTER_ENDPOINT,
   MEAL_INGREDIENT_ENDPOINT,
   MEAL_NAME_ENDPOINT } from './endpointsTypes';
@@ -21,4 +23,9 @@ export const getDrinksEndpoints = (filter, data) => {
 export const changeEndPointByFilterOrPage = (page, filter, data) => {
   if (page === 'foods') return getMealEndpoints(filter, data);
   return getDrinksEndpoints(filter, data);
+};
+
+export const changeCategoryEndPoins = (path) => {
+  if (path === '/foods') return MEAL_CATEGORYS_ENDPOINT;
+  return DRINKS_CATEGORYS_ENDPOINT;
 };
