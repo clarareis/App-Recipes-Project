@@ -1,14 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Header from '../../Components/Header';
 import './Profile.css';
 import Footer from '../../components/Footer/Footer';
-import { getLocalStore } from '../../LocalStore/LocalStore';
 
 function Profile() {
-  const data = getLocalStore('user');
   const history = useHistory();
-
+  const email = useSelector((state) => state.userReducer.email);
   return (
 
     <section
@@ -18,7 +17,8 @@ function Profile() {
       <h1>Profile</h1>
       <main>
         <p data-testid="profile-email">
-          { data.email }
+          { email }
+
         </p>
         <button
           onClick={ () => { history.push('/done-recipes'); } }

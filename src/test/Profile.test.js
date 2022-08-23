@@ -8,9 +8,11 @@ describe('Testa a tela de Profile', () => {
   it('Verifica se é renderizado o e-mail do usuário', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/profile');
-    localStorage.setItem('user', JSON.stringify('test@test3.com'));
-    const email = localStorage.getItem('user');
-    expect(email).toBeDefined();
+
+    const localEmail = screen.getByTestId('profile-email');
+    expect(localEmail).toBeInTheDocument();
+    const MyEmailLocal = localStorage.getItem('user');
+    expect(MyEmailLocal).toBeDefined();
   });
 
   it('Verifica se é renderizado o botão de Done Recipes', () => {
