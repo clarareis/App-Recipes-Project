@@ -67,7 +67,7 @@ describe('test in search component', () => {
     json: () => Promise.resolve(),
   }));
 
-  test('test if meal api is caled in food area with name filter selected', () => {
+  test('test if meal api is called in food area with name filter selected', () => {
     renderWithRouterAndRedux(<Header
       headerName="foods"
     />);

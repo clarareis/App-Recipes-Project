@@ -8,7 +8,7 @@ import Foods from './pages/Foods/Foods';
 import Drinks from './pages/Drinks/Drinks';
 import FoodRecipe from './pages/FoodRecipe/FoodRecipe';
 import DrinkRecipe from './pages/DrinkRecipe/DrinkRecipe';
-import profile from './pages/Profile/profile';
+import profile from './pages/Profile/Profile';
 import FavoriteRecipe from './pages/FavoriteRecipe/FavoriteRecipe';
 import ProgressFood from './pages/ProgressFood/ProgressFood';
 import DrinkProgress from './pages/DrinkProgress/DrinkProgress';
