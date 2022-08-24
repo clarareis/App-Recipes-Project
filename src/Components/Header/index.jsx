@@ -23,7 +23,7 @@ function Header({ headerName }) {
     <header
       className="header_content"
     >
-      <section className={ headerName === 'Profile' ? 'top_area_profile' : 'top_area' }>
+      <section className="top_area">
         <button
           onClick={ () => history.push('profile') }
           type="button"

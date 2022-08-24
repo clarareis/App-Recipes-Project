@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
-// import { requestRecipesByfilter } from '../../../services/fetchFoodsAndDrinks';
-import { requestRecipesByfilter } from '../../../services/fetchFoodsAndDrinks';
+import { isAItem } from '../../../Components/SearchBar/verifyData';
 import { MAX_RECIPES_CARDS, SET_FILTER_RECIPES } from '../../types/reduxTypes';
 
 export const setRecipes = (filtedRecipes) => ({
@@ -8,8 +7,13 @@ export const setRecipes = (filtedRecipes) => ({
   filtedRecipes,
 });
 
-export const fetchRecipes = (nowPath, filter, nameOfItem) => async (dispatch) => {
-  const recipes = await requestRecipesByfilter(nowPath, filter, nameOfItem);
+export const fetchRecipes = ({ nowPath, history, recipes }) => async (dispatch) => {
+  if (!recipes) {
+    const message = 'Sorry, we haven\'t found any recipes for these filters.';
+    alert(message);
+    return;
+  }
+  isAItem(recipes, history, nowPath);
   dispatch(setRecipes(recipes.slice(0, MAX_RECIPES_CARDS)));
 };
 
