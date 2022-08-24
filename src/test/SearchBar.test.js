@@ -60,7 +60,7 @@ describe('test in search component', () => {
     userEvent.type(searchInput, 'Salmon');
     userEvent.click(ingredientBtn);
     userEvent.click(searchBtn);
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 
   test('test if meal api is caled in food area with name filter selected', () => {
@@ -80,7 +80,7 @@ describe('test in search component', () => {
     userEvent.click(nameRadio);
     userEvent.click(searchBtn);
 
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 
   test(`verify if alert is called case first latter filter
@@ -110,7 +110,7 @@ describe('test in search component', () => {
 
   test('fetch is redirect for id page in case de api return one item', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(nameMock.meals),
+      json: () => Promise.resolve(nameMock.meals[0]),
     }));
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/foods');
