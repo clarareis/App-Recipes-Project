@@ -1,10 +1,10 @@
 .profile_content {
   align-items: center;
+  background-color: blueviolet;
   display: flex;
+  flex-direction: column;
   height: 60%;
   justify-content: center;
-  flex-direction: column;
-  background-color: blueviolet;
-  width: 360px;
   margin-top: 20%;
+  width: 360px;
 }
