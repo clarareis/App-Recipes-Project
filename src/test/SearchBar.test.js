@@ -63,7 +63,11 @@ describe('test in search component', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  test('test if meal api is caled in food area with name filter selected', () => {
+  global.fetch = jest.fn(() => Promise.resolve({
+    json: () => Promise.resolve(),
+  }));
+
+  test('test if meal api is called in food area with name filter selected', () => {
     renderWithRouterAndRedux(<Header
       headerName="foods"
     />);

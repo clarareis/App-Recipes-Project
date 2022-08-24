@@ -17,6 +17,7 @@ export const fetchRecipes = ({ nowPath, history, recipes }) => async (dispatch) 
   dispatch(setRecipes(recipes.slice(0, MAX_RECIPES_CARDS)));
 };
 
-export const filterRecipe = () => {
-
-};
+export const setUser = (email) => ({
+  type: 'SET_USER',
+  email,
+});
