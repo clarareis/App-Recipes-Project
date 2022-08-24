@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './recomendation.css';
 
 function RecomendationFoods({ recomendation, i }) {
   const { strMeal } = recomendation;
