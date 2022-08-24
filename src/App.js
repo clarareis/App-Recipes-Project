@@ -7,6 +7,7 @@ import DoneRecipe from './pages/DoneRecipe/DoneRecipe';
 import Foods from './pages/Foods/Foods';
 import Drinks from './pages/Drinks/Drinks';
 import profile from './pages/Profile/Profile';
+
 import FavoriteRecipe from './pages/FavoriteRecipe/FavoriteRecipe';
 import ProgressFood from './pages/ProgressFood/ProgressFood';
 import DrinkProgress from './pages/DrinkProgress/DrinkProgress';

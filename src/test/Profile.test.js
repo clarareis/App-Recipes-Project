@@ -26,7 +26,7 @@ describe('Testa a tela de Profile', () => {
     expect(history.location.pathname).toBe('/done-recipes');
   });
 
-  it('Verifica se é renderizado o botão de Favorite Recipes', () => {
+  it('Verifica se é renderizado o botão de Favorite Recipes', async () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/profile');
 
