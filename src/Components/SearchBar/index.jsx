@@ -3,9 +3,14 @@ import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { requestCategorys, requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
+import {
+  requestCategorys,
+  requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
-import { fetchRecipeList, fetchRecipes, fetchRecipesByCategory, resetRecipeList } from '../../Redux/actions/recipesActions/recipeActions';
+import {
+  fetchRecipes,
+  fetchRecipesByCategory,
+  resetRecipeList } from '../../Redux/actions/recipesActions/recipeActions';
 
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const [filter, setFilter] = useState('');
