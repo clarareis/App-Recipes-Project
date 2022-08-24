@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { requestCategorys, requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
-import { fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
+import { fetchRecipeList, fetchRecipes, fetchRecipesByCategory, resetRecipeList } from '../../Redux/actions/recipesActions/recipeActions';
 
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const [filter, setFilter] = useState('');
@@ -21,8 +21,8 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
 
   const requestCategory = async () => {
     const nowCategorys = await requestCategorys(history.location.pathname);
-    setCategorys(nowCategorys);
-    console.log(nowCategorys);
+    setCategorys([...nowCategorys, { strCategory: 'All' }]);
+    console.log(categorys);
   };
 
   useEffect(() => {
@@ -33,6 +33,23 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
     if (filter === 'first-letter' && nameOfItem.length > 1) {
       alert('Your search must have only 1 (one) character');
     }
+  };
+
+  const getRecipeByCategory = (category) => {
+    if (category === 'All') {
+      const currentPath = nowPath === 'drinks' ? 'Drinks' : 'Foods';
+      dispatch(resetRecipeList(currentPath));
+      setCurrentCategoryReference('');
+      return;
+    }
+    if (currentCategoryReference === category) {
+      const currentPath = nowPath === 'drinks' ? 'Drinks' : 'Foods';
+      dispatch(resetRecipeList(currentPath));
+      setCurrentCategoryReference('');
+      return;
+    }
+    setCurrentCategoryReference(category);
+    dispatch(fetchRecipesByCategory(category, history.location.pathname));
   };
 
   const getRecipes = async () => {
@@ -111,15 +128,14 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
         {
           categorys.length && categorys.map((currentCategory) => (
             <button
+              data-testid={ `${currentCategory.strCategory}-category-filter` }
               style={ {
                 backgroundColor: currentCategory.strCategory === currentCategoryReference
                   ? '#303030' : '#fff',
+                color: currentCategory.strCategory !== currentCategoryReference
+                  ? '#303030' : '#fff',
               } }
-              onClick={ () => setCurrentCategoryReference(
-                currentCategory.strCategory === currentCategoryReference ? ''
-                  : currentCategory.strCategory,
-              ) }
-              data-testid="exec-search-btn"
+              onClick={ () => getRecipeByCategory(currentCategory.strCategory) }
               type="button"
               key={ currentCategory.strCategory }
             >

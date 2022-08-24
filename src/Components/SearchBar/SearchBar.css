@@ -25,6 +25,8 @@
 }
 
 .category_area button {
+  border: none;
   font-size: 14px;
+  margin: 2px;
   padding: 1px;
 }
