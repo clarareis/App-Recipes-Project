@@ -17,7 +17,6 @@ function Header({ headerName }) {
     if (headerName === 'Done Recipes' || headerName === 'Profile'
     || headerName === 'Favorite Recipes') return setShowHeaderBtn(false);
     setShowHeaderBtn(true);
-    console.log(headerName);
   }, [headerName]);
 
   return (
