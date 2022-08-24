@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import Categorys from '../../Components/Categorys/Categorys';
 import Header from '../../Components/Header';
 import Recipes from '../../Components/Recipes';
 import { fetchRecipeList } from '../../Redux/actions/recipesActions/recipeActions';

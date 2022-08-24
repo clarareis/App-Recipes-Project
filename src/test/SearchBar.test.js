@@ -1,9 +1,9 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './RenderWith';
 import Header from '../Components/Header';
-import { ingredientMock, nameMock } from '../../_Mocks/SearchMock';
+import { ingredientMock } from '../../_Mocks/SearchMock';
 import App from '../App';
 
 const searchInputId = 'search-input';
@@ -13,10 +13,6 @@ const ingredientsBtnId = 'ingredient-search-radio';
 const nameBtnId = 'name-search-radio';
 const firsLetterBtnId = 'first-letter-search-radio';
 const searchBtnId = 'exec-search-btn';
-
-beforeEach(() => {
-  fetch.mockClear();
-});
 
 describe('test in search component', () => {
   test('verify components in screen', () => {
@@ -109,9 +105,6 @@ describe('test in search component', () => {
   });
 
   test('fetch is redirect for id page in case de api return one item', async () => {
-    global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(nameMock.meals[0]),
-    }));
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/foods');
 
@@ -125,5 +118,10 @@ describe('test in search component', () => {
     userEvent.type(searchInput, 'Arrabiata');
     userEvent.click(nameBtn);
     userEvent.click(searchBtn);
+  });
+
+  test('category is render in screen', async () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/foods');
   });
 });

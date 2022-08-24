@@ -9,9 +9,9 @@ const userBtnId = 'profile-top-btn';
 const showSearchBtnId = 'search-top-btn';
 
 beforeEach(() => {
-  jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-    json: () => Promise.resolve(),
-  }));
+  // jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+  //   json: () => Promise.resolve(),
+  // }));
 });
 afterEach(() => {
   jest.resetAllMocks();

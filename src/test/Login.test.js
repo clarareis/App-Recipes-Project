@@ -8,15 +8,6 @@ import App from '../App';
 const emailInput = 'email-input';
 const SenhaInput = 'password-input';
 
-beforeEach(() => {
-  jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-    json: () => Promise.resolve(),
-  }));
-});
-afterEach(() => {
-  jest.resetAllMocks();
-});
-
 describe('Testes na Pagina Inicial de Login', () => {
   it('É renderizado um botão com o texto Entrar e verifica se os inputs existem', () => {
     renderWithRouterAndRedux(<App />);

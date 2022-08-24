@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 // import { requestRecipesByfilter } from '../../../services/fetchFoodsAndDrinks';
+import { isAItem } from '../../../Components/SearchBar/verifyData';
 import { requestRecipesList } from '../../../services/fetchFoodsAndDrinks';
 import { MAX_RECIPES_CARDS,
   SET_FILTER_RECIPES,
