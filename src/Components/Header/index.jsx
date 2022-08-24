@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import SearchIcon from '../../images/searchIcon.svg';
 import SearchBar from '../SearchBar';
+import Categorys from '../Categorys/Categorys';
 
 function Header({ headerName }) {
   const history = useHistory();
@@ -16,7 +17,6 @@ function Header({ headerName }) {
     if (headerName === 'Done Recipes' || headerName === 'Profile'
     || headerName === 'Favorite Recipes') return setShowHeaderBtn(false);
     setShowHeaderBtn(true);
-    console.log(headerName);
   }, [headerName]);
 
   return (
@@ -60,6 +60,7 @@ function Header({ headerName }) {
         showSearch={ showSearch }
         nameOfItem={ nameOfItem }
       />
+      <Categorys />
     </header>
   );
 }

@@ -3,13 +3,16 @@ import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
+import {
+  requestRecipesByfilter } from '../../services/fetchFoodsAndDrinks';
 import './SearchBar.css';
-import { fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
+import {
+  fetchRecipes } from '../../Redux/actions/recipesActions/recipeActions';
 
 function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
   const [filter, setFilter] = useState('');
   const [nowPath, setNowpath] = useState('');
+
   const history = useHistory();
   const dispatch = useDispatch();
 

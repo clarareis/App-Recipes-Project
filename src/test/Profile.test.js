@@ -37,7 +37,7 @@ describe('Testa a tela de Profile', () => {
     expect(history.location.pathname).toBe('/favorite-recipes');
   });
 
-  it('Verifica se é renderizado o botão de Logout', async () => {
+  it('Verifica se é renderizado o botão de Logout', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/profile');
 

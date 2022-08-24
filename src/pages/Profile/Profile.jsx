@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Header from '../../Components/Header';
 import './Profile.css';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../Components/Footer/Footer';
 
 function Profile() {
   const history = useHistory();

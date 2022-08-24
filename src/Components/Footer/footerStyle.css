@@ -1,7 +1,7 @@
 .footer {
-  background-color: red;
   bottom: 0;
   display: flex;
+  justify-content: center;
   position: fixed;
   text-align: center;
   width: 360px;

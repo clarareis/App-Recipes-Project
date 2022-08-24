@@ -5,7 +5,7 @@ function FavoriteRecipe() {
   return (
     <section>
       <Header headerName="Favorite Recipes" />
-      <h1>FavoriteRecipe</h1>
+      <h1>FavoriteRecipes</h1>
     </section>
   );
 }

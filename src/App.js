@@ -6,12 +6,12 @@ import Login from './pages/Login/Login';
 import DoneRecipe from './pages/DoneRecipe/DoneRecipe';
 import Foods from './pages/Foods/Foods';
 import Drinks from './pages/Drinks/Drinks';
-import FoodRecipe from './pages/FoodRecipe/FoodRecipe';
-import DrinkRecipe from './pages/DrinkRecipe/DrinkRecipe';
 import profile from './pages/Profile/Profile';
+
 import FavoriteRecipe from './pages/FavoriteRecipe/FavoriteRecipe';
 import ProgressFood from './pages/ProgressFood/ProgressFood';
 import DrinkProgress from './pages/DrinkProgress/DrinkProgress';
+import Receitas from './pages/Receitas/receitas';
 
 const id = 'id-da-receita';
 
@@ -22,8 +22,10 @@ function App() {
         <Route component={ Login } path="/" exact />
         <Route component={ Foods } path="/foods" exact />
         <Route component={ Drinks } path="/drinks" exact />
-        <Route component={ FoodRecipe } path={ `/foods/${id}` } exact />
-        <Route component={ DrinkRecipe } path={ `/drinks/${id}` } exact />
+        <Route component={ Receitas } path="/foods/:id" exact>
+          {/* <RecipeDetails recipeType="meal" /> */}
+        </Route>
+        <Route component={ Receitas } path="/drinks/:id" exact />
         <Route
           component={ ProgressFood }
           path={ `/foods/${id}in-progress` }
@@ -39,6 +41,7 @@ function App() {
         <Route component={ FavoriteRecipe } path="/favorite-recipes" exact />
       </Switch>
     </main>
+
   );
 }
 
