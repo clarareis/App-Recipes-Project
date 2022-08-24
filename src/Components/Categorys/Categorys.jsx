@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchRecipesByCategory, resetRecipeList } from '../../Redux/actions/recipesActions/recipeActions';
+import { fetchRecipesByCategory,
+  resetRecipeList } from '../../Redux/actions/recipesActions/recipeActions';
 import { requestCategorys } from '../../services/fetchFoodsAndDrinks';
 import './style.css';
 
