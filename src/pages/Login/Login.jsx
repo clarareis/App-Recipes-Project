@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
 import {
   emailVerification,
   passwordVerification,
 } from '../../verifyUserData/emailAndPAsswordVerification';
 import { updateLocalStore } from '../../LocalStore/LocalStore';
+import { setUser } from '../../Redux/actions/recipesActions/recipeActions';
 
 function Login({ history }) {
   const [userData, setuserData] = useState({
@@ -16,11 +18,14 @@ function Login({ history }) {
 
   const handleUserData = ({ name, value }) => setuserData({ ...userData, [name]: value });
 
+  const dispatch = useDispatch();
+
   const sigin = () => {
     history.push('/foods');
     updateLocalStore('user', { email: userData.email });
     updateLocalStore('mealsToken', 1);
     updateLocalStore('cocktailsToken', 1);
+    dispatch(setUser(userData.email));
   };
 
   useEffect(() => {

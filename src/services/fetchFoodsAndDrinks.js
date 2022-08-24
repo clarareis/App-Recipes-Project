@@ -4,10 +4,10 @@ import {
   MEAL_LIST_ENDPOINT } from './endpointsTypes';
 import { changeCategoryEndPoins, changeEndPointByFilterOrPage } from './_end_points';
 
-export const requestRecipesByfilter = async (page, filter, data) => {
+export const requestRecipesByfilter = async (page, filter, data, id) => {
   try {
     const recipeApiResponse = await
-    fetch(changeEndPointByFilterOrPage(page, filter, data));
+    fetch(changeEndPointByFilterOrPage(page, filter, data, id));
     const successRecipesRequest = await recipeApiResponse.json();
     if (page === 'drinks') return successRecipesRequest.drinks;
     return successRecipesRequest.meals;

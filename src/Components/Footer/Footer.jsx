@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import drinkOne from '../../images/drinkIcon.svg';
-import drinkTwo from '../../images/mealIcon.svg';
+import drink from '../../images/drinkIcon.svg';
+import food from '../../images/mealIcon.svg';
 import './footerStyle.css';
 
 function Footer() {
@@ -11,15 +11,15 @@ function Footer() {
         <img
           alt="Drink"
           data-testid="drinks-bottom-btn"
-          src={ drinkOne }
+          src={ drink }
         />
       </Link>
       <Link to="./foods">
 
         <img
-          alt="Drinktwo"
+          alt="Food"
           data-testid="food-bottom-btn"
-          src={ drinkTwo }
+          src={ food }
         />
       </Link>
 

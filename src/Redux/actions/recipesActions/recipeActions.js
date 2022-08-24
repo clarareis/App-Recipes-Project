@@ -1,10 +1,13 @@
 /* eslint-disable no-alert */
 // import { requestRecipesByfilter } from '../../../services/fetchFoodsAndDrinks';
+
 import { isAItem } from '../../../Components/SearchBar/verifyData';
 import { requestRecipesList } from '../../../services/fetchFoodsAndDrinks';
 import { MAX_RECIPES_CARDS,
   SET_FILTER_RECIPES,
   SET_RECIPES_LIST } from '../../types/reduxTypes';
+// import { MAX_RECIPES_CARDS, SET_FILTER_RECIPES,
+// } from '../../types/reduxTypes';
 
 export const setRecipes = (filtedRecipes) => ({
   type: SET_FILTER_RECIPES,
@@ -48,3 +51,8 @@ export const resetRecipeList = (Path) => async (dispatch) => {
   const recipes = await requestRecipesList(Path);
   dispatch(setRecipes(recipes.slice(0, MAX_RECIPES_CARDS)));
 };
+
+export const setUser = (email) => ({
+  type: 'SET_USER',
+  email,
+});

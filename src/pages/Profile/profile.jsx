@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../Components/Header';
 import './Profile.css';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../Components/Footer/Footer';
 
 function profile() {
   return (
