@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-// import './recipeDetails.css';
+import React from 'react';
+import './RecipeDetails.css';
 import PropTypes from 'prop-types';
 import { Carousel } from 'react-bootstrap';
-import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
-import './RecipeDetails.css';
 
 const six = 6;
 
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
-  const [buttonDisable, setButtonDisable] = useState(false);
-  const doneRecipes = getLocalStore('doneRecipes');
-  // console.log(keys);
-  // console.log(recomendacao);
+  // const [] = useState([]);
   const recipesIncrements = () => {
     const allRecipes = [];
     const vinteIngredientes = 20;
@@ -31,27 +26,8 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
     }
     return <ul>{allRecipes}</ul>;
   };
-
-  const localStorageDoneRecipes = () => {
-    const { idMeal, idDrink, strTags, strCategory,
-      strMealThumb, strDrinkThumb,
-      strDrink, strMeal, strArea, strAlcoholic } = recipe;
-    const addARecipe = [updateLocalStore(doneRecipes), {
-      id: endpoint === foods ? idMeal : idDrink,
-      type: strTags,
-      nationality: strArea,
-      category: strCategory,
-      alcoholicOrNot: endpoint === foods ? 'Food Dont Have alcool' : strAlcoholic,
-      name: endpoint === foods ? strMeal : strDrink,
-      image: endpoint === foods ? strMealThumb : strDrinkThumb,
-      doneDate: '',
-      tags: strTags }];
-    return addARecipe;
-  };
-
-  const BtnLocalStorage = () => {
-    localStorageDoneRecipes();
-  };
+  console.log(recipe);
+  // Req 31
 
   const seisReceitas = recomendacao.filter((e, i) => i < six);
   // para fazer o carrossel utilizei esse link//https://react-bootstrap.github.io/components/carousel/
@@ -122,20 +98,6 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
           );
         })}
       </Carousel>
-      <button
-        type="button"
-        onClick={ BtnLocalStorage }
-      >
-        aa
-      </button>
-      <button
-        type="button"
-        className="start-recipe-btn"
-        data-testid="start-recipe-btn"
-        // onClick={ () => startRecipes() }
-      >
-        Start Recipe
-      </button>
     </div>
   );
 }
