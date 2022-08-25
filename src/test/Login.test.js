@@ -4,11 +4,11 @@ import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './RenderWith';
 import App from '../App';
 
-beforeEach(() => {
-  jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-    json: () => Promise.resolve(),
-  }));
-});
+// beforeEach(() => {
+//   jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+//     json: () => Promise.resolve(),
+//   }));
+// });
 afterEach(() => {
   jest.resetAllMocks();
 });
@@ -51,9 +51,6 @@ describe('Testes na Pagina Inicial de Login', () => {
     expect(drinksToken).toBeDefined();
   });
   test('É renderizado um botão que te manda para outro local', async () => {
-    // jest.spyOn(global, 'fetch').mockResolvedValue({
-    //   json: jest.fn().mockResolvedValue(),
-    // });
     const { history } = renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId(emailInput);

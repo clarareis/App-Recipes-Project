@@ -11,7 +11,7 @@ import profile from './pages/Profile/Profile';
 import FavoriteRecipe from './pages/FavoriteRecipe/FavoriteRecipe';
 import ProgressFood from './pages/ProgressFood/ProgressFood';
 import DrinkProgress from './pages/DrinkProgress/DrinkProgress';
-import Receitas from './pages/Receitas/receitas';
+import Receitas from './pages/Receitas/recipes';
 
 const id = 'id-da-receita';
 

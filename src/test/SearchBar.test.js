@@ -14,6 +14,15 @@ const nameBtnId = 'name-search-radio';
 const firsLetterBtnId = 'first-letter-search-radio';
 const searchBtnId = 'exec-search-btn';
 
+// beforeEach(() => {
+//   jest.spyOn(global, 'alert').mockImplementationOnce(() => Promise.resolve({
+//     json: () => Promise.resolve(),
+//   }));
+// });
+afterEach(() => {
+  jest.resetAllMocks();
+});
+
 describe('test in search component', () => {
   test('verify components in screen', () => {
     renderWithRouterAndRedux(<Header
@@ -59,9 +68,9 @@ describe('test in search component', () => {
     expect(fetch).toHaveBeenCalledTimes(2);
   });
 
-  global.fetch = jest.fn(() => Promise.resolve({
-    json: () => Promise.resolve(),
-  }));
+  // global.fetch = jest.fn(() => Promise.resolve({
+  //   json: () => Promise.resolve(),
+  // }));
 
   test('test if meal api is called in food area with name filter selected', () => {
     renderWithRouterAndRedux(<Header
@@ -124,8 +133,8 @@ describe('test in search component', () => {
     userEvent.click(searchBtn);
   });
 
-  test('category is render in screen', async () => {
-    const { history } = renderWithRouterAndRedux(<App />);
-    history.push('/foods');
-  });
+  // test('category is render in screen', () => {
+  //   const { history } = renderWithRouterAndRedux(<App />);
+  //   history.push('/foods');
+  // });
 });

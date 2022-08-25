@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+// import './recipeDetails.css';
 import PropTypes from 'prop-types';
-import RecomendationFoods from '../Recomendation/RecomendationFoods';
-import RecomenationDrinks from '../Recomendation/RecomendationDrinks';
+import { Carousel } from 'react-bootstrap';
+import { propTypes } from 'react-bootstrap/esm/Image';
+import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
+
+const six = 6;
 
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
+  const [buttonDisable, setButtonDisable] = useState(false);
+  // console.log(keys);
+  // console.log(recomendacao);
   const recipesIncrements = () => {
     const allRecipes = [];
     const vinteIngredientes = 20;
@@ -21,10 +28,33 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
         );
       }
     }
-
     return <ul>{allRecipes}</ul>;
   };
 
+  const localStorageDoneRecipes = () => {
+    const { idMeal, idDrink, strTags, strCategory,
+      strMealThumb, strDrinkThumb,
+      strDrink, strMeal, strArea, strAlcoholic } = recipe;
+    console.log(recipe);
+    const addARecipe = [...getLocalStore('doneRecipes'), {
+      id: endpoint === foods ? idMeal : idDrink,
+      type: strTags,
+      nationality: strArea,
+      category: strCategory,
+      alcoholicOrNot: endpoint === foods ? 'Food Dont Have alcool' : strAlcoholic,
+      name: endpoint === foods ? strMeal : strDrink,
+      image: endpoint === foods ? strMealThumb : strDrinkThumb,
+      doneDate: '',
+      tags: strTags }];
+    updateLocalStore(addARecipe, {});
+  };
+
+  const BtnLocalStorage = () => {
+    localStorageDoneRecipes();
+  };
+
+  const seisReceitas = recomendacao.filter((e, i) => i < six);
+  // para fazer o carrossel utilizei esse link//https://react-bootstrap.github.io/components/carousel/
   return (
     <div>
       <h1
@@ -54,16 +84,49 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
         frameBorder="0"
         title="videos "
       />}
-      {recomendacao.map((recomendation, i) => (
-        <div key={ i }>
-          {
-            endpoint === 'Foods'
-              ? <RecomendationFoods recomendation={ recomendation } i={ i } />
-              : <RecomenationDrinks recomendation={ recomendation } i={ i } />
-          }
-        </div>
-      ))}
+
+      <Carousel>
+        { seisReceitas.map((receitas, i) => {
+          const { strDrink, strDrinkThumb, strMeal, strMealThumb } = receitas;
+          return (
+            endpoint === 'foods' ? (
+              <Carousel.Item
+                key={ strDrink }
+                data-testid={ `${i}-recomendation-card` }
+              >
+                <img
+                  width="200px"
+                  heigth="200"
+                  alt={ strDrink }
+                  src={ strDrinkThumb }
+                />
+                <Carousel.Caption>
+                  <span data-testid={ `${i}-recomendation-title` }>{ strDrink }</span>
+                </Carousel.Caption>
+              </Carousel.Item>
+            ) : (
+              <Carousel.Item
+                data-testid={ `${i}-recomendation-card` }
+              >
+                <img
+                  width="100%"
+                  heigth="200"
+                  alt={ strMeal }
+                  src={ strMealThumb }
+                />
+                <Carousel.Caption>
+                  <span data-testid={ `${i}-recomendation-title` }>{ strMeal }</span>
+                </Carousel.Caption>
+              </Carousel.Item>
+            )
+          );
+        })}
+      </Carousel>
+      {/* <button>
+        Crate Recipe
+      </button> */}
     </div>
+
   );
 }
 
@@ -77,6 +140,13 @@ RecipeDetails.propTypes = {
     strTags: PropTypes.string,
     strMeal: PropTypes.string,
     strYoutube: PropTypes.string,
+    idMeal: PropTypes.string,
+    idDrink: PropTypes.string,
+    strMealThumb: PropTypes.string,
+    strDrinkThumb: PropTypes.string,
+    strDrink: PropTypes.string,
+    strArea: PropTypes.string,
+    strAlcoholic: PropTypes.string,
   }).isRequired,
   keys: PropTypes.shape({
     name: PropTypes.string,

@@ -11,17 +11,14 @@ function Recipes() {
   const { pathname } = history.location;
   const lastI = pathname.lastIndexOf('/');
   const endpoint = pathname.slice(1, lastI);
-
+  const [recomendacao, setRecomendacao] = useState([]);
   const [recipe, setRecipes] = useState({});
   const { id } = useParams();
-  console.log(recipe);
   const keys = {
-
     name: (endpoint === 'foods') ? 'strMeal' : 'strDrink',
     img: (endpoint === 'foods') ? 'strMealThumb' : 'strDrinkThumb',
     category: (endpoint === 'foods') ? 'strCategory' : 'strAlcoholic',
   };
-  const [recomendacao, setRecomendacao] = useState([]);
 
   useEffect(() => {
     const testFoodOrDrink = async () => {

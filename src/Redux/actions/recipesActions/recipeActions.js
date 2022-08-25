@@ -15,7 +15,7 @@ export const setRecipes = (filtedRecipes) => ({
 export const fetchRecipes = ({ nowPath, history, recipes }) => async (dispatch) => {
   if (!recipes) {
     const message = 'Sorry, we haven\'t found any recipes for these filters.';
-    alert(message);
+    global.alert(message);
     return;
   }
   isAItem(recipes, history, nowPath);
