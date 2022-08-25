@@ -122,9 +122,6 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
           );
         })}
       </Carousel>
-      {/* <button>
-        Crate Recipe
-      </button> */}
     </div>
 
   );
