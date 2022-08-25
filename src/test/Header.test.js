@@ -3,10 +3,12 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './RenderWith';
 import Header from '../Components/Header';
+import App from '../App';
 
 const searchInputId = 'search-input';
 const userBtnId = 'profile-top-btn';
 const showSearchBtnId = 'search-top-btn';
+const searchBtnId = 'exec-search-btn';
 
 beforeEach(() => {
   // jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
@@ -49,12 +51,9 @@ describe('Testando o componente Header', () => {
   });
 
   test('testando se search aparece na pagina de profile', async () => {
-    const { history } = renderWithRouterAndRedux(<Header
-      headerName="Favorite Recipes"
-    />);
-
-    const userBtn = screen.getByTestId(userBtnId);
-    await userEvent.click(userBtn);
-    expect(history.location.pathname).toBe('/profile');
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/profile');
+    const searchInput = screen.getByTestId(searchBtnId);
+    expect(searchInput).toBeInTheDocument();
   });
 });
