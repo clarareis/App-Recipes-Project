@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 // import './recipeDetails.css';
 import PropTypes from 'prop-types';
 import { Carousel } from 'react-bootstrap';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
+import './RecipeDetails.css';
 
 const six = 6;
 
@@ -128,8 +128,15 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
       >
         aa
       </button>
+      <button
+        type="button"
+        className="start-recipe-btn"
+        data-testid="start-recipe-btn"
+        // onClick={ () => startRecipes() }
+      >
+        Start Recipe
+      </button>
     </div>
-
   );
 }
 
