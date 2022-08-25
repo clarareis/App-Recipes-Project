@@ -10,6 +10,7 @@ const six = 6;
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
   const [buttonDisable, setButtonDisable] = useState(false);
+  const doneRecipes = getLocalStore('doneRecipes');
   // console.log(keys);
   // console.log(recomendacao);
   const recipesIncrements = () => {
@@ -35,8 +36,7 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
     const { idMeal, idDrink, strTags, strCategory,
       strMealThumb, strDrinkThumb,
       strDrink, strMeal, strArea, strAlcoholic } = recipe;
-    console.log(recipe);
-    const addARecipe = [...getLocalStore('doneRecipes'), {
+    const addARecipe = [updateLocalStore(doneRecipes), {
       id: endpoint === foods ? idMeal : idDrink,
       type: strTags,
       nationality: strArea,
@@ -46,7 +46,7 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
       image: endpoint === foods ? strMealThumb : strDrinkThumb,
       doneDate: '',
       tags: strTags }];
-    updateLocalStore(addARecipe, {});
+    return addARecipe;
   };
 
   const BtnLocalStorage = () => {
@@ -122,6 +122,12 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
           );
         })}
       </Carousel>
+      <button
+        type="button"
+        onClick={ BtnLocalStorage }
+      >
+        aa
+      </button>
     </div>
 
   );
