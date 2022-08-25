@@ -5,7 +5,6 @@
   flex-direction: column;
   height: auto;
   justify-content: flex-start;
-  position: fixed;
   top: 0;
   width: 360px;
 }
