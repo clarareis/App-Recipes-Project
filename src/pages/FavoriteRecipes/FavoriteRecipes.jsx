@@ -105,7 +105,7 @@ function FavoriteRecipes() {
                 data-testid={ `${index}-horizontal-favorite-btn` }
                 type="image"
                 src={ favIcon }
-                alt="shareIcon"
+                alt="favoriteIcon"
                 onClick={ () => removeFavorites(recipe.id) }
               />
             </div>

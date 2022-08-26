@@ -7,6 +7,7 @@ import {
 } from '../../verifyUserData/emailAndPAsswordVerification';
 import { updateLocalStore } from '../../LocalStore/LocalStore';
 import { setUser } from '../../Redux/actions/recipesActions/recipeActions';
+import './Login.css';
 
 function Login({ history }) {
   const [userData, setuserData] = useState({
@@ -41,7 +42,7 @@ function Login({ history }) {
 
   return (
     <section>
-      <form>
+      <form id="login-form">
         <label htmlFor="email">
           <input
             data-testid="email-input"

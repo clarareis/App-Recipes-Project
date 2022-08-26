@@ -15,13 +15,13 @@ const mockLocalDoneRecipes = [
     image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
   },
   {
-    id: '53060',
-    type: 'food',
-    nationality: 'Croatian',
-    category: 'Side',
-    alcoholicOrNot: '',
-    name: 'Burek',
-    image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+    id: '17222',
+    type: 'drink',
+    nationality: '',
+    category: 'Cocktail',
+    alcoholicOrNot: 'Alcoholic',
+    name: 'A1',
+    image: 'https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg',
   },
 ];
 const done = '/favorite-recipes';
@@ -34,62 +34,54 @@ describe('Testa a tela de Favorite-Recipes', () => {
   });
   it('Verifica se é renderizado três botões na tela', () => {
     localStorage.clear();
-    localStorage.setItem('doneRecipes', JSON.stringify(mockLocalDoneRecipes));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(mockLocalDoneRecipes));
     const { history } = renderWithRouterAndRedux(<App />);
     history.push(done);
 
     const btnFood = screen.getByTestId('filter-by-food-btn');
     expect(btnFood).toBeInTheDocument();
     userEvent.click(btnFood);
-    const img = screen.getAllByTestId(/horizontal-image/i);
+    const img = screen.getAllByTestId('0-horizontal-image');
     expect(img).toHaveLength(1);
 
     const btnAll = screen.getByTestId('filter-by-all-btn');
     expect(btnAll).toBeInTheDocument();
     userEvent.click(btnAll);
-    const text = screen.getAllByTestId(/horizontal-top-text/i);
-    expect(text).toHaveLength(2);
+    const text = screen.getAllByTestId('0-horizontal-top-text');
+    expect(text).toHaveLength(1);
 
     const btnDrink = screen.getByTestId('filter-by-drink-btn');
     expect(btnDrink).toBeInTheDocument();
     userEvent.click(btnDrink);
-    const date = screen.getAllByTestId(/horizontal-done-date/i);
+    const date = screen.getAllByTestId('0-horizontal-top-text');
     expect(date).toHaveLength(1);
   });
 
-  it('Verifica se é renderizado as informações da receita', () => {
+  it('Verifica o botão de remover a receita favorita', async () => {
     localStorage.clear();
-    localStorage.setItem('doneRecipes', JSON.stringify(mockLocalDoneRecipes));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(mockLocalDoneRecipes));
     const { history } = renderWithRouterAndRedux(<App />);
-    history.push(done);
+    history.push('/favorite-recipes');
 
-    const img = screen.getAllByTestId(/horizontal-image/i);
-    expect(img).toHaveLength(2);
-
-    const text = screen.getAllByTestId(/horizontal-top-text/i);
-    expect(text).toHaveLength(2);
-
-    const name = screen.getAllByTestId(/horizontal-name/i);
-    expect(name).toHaveLength(2);
-
-    const date = screen.getAllByTestId(/horizontal-done-date/i);
-    expect(date).toHaveLength(2);
-
-    const btnShare = screen.getByTestId('0-horizontal-share-btn');
-    expect(btnShare).toBeInTheDocument();
+    const firstRecipe = await screen.findByTestId('1-horizontal-top-text');
+    expect(firstRecipe).toBeInTheDocument();
+    const getFavoriteButton = screen.getByTestId('1-horizontal-favorite-btn');
+    expect(getFavoriteButton).toBeInTheDocument();
+    userEvent.click(getFavoriteButton);
+    expect(firstRecipe).not.toBeInTheDocument();
   });
 
-  it('Verifica funcionalidade do clipboard ', () => {
+  it('Verifica funcionalidade do clipboard ', async () => {
     localStorage.clear();
-    localStorage.setItem('doneRecipes', JSON.stringify(mockLocalDoneRecipes));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(mockLocalDoneRecipes));
     const { history } = renderWithRouterAndRedux(<App />);
     history.push(done);
 
     jest.spyOn(navigator.clipboard, 'writeText');
-    const btnShare = screen.getByTestId('0-horizontal-share-btn');
+    const btnShare = await screen.findByTestId('0-horizontal-share-btn');
     userEvent.click(btnShare);
 
     expect(screen.getByText(/link copied!/i)).toBeInTheDocument();
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost/foods/52771');
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost/foods/52977');
   });
 });
