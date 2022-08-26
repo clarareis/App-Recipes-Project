@@ -8,12 +8,6 @@ function Recipes({ recipeType }) {
   const recipes = useSelector((state) => state.recipeReducer.recipes);
   const filtedRecipes = useSelector((state) => state.recipeReducer.filterdRecipes);
 
-  if (!recipes || !filtedRecipes) {
-    return (
-      <section />
-    );
-  }
-
   return (
     <section
       className="recipes_container"

@@ -43,8 +43,9 @@ export const fetchRecipesByCategory = (category, path) => async (dispatch) => {
   dispatch(setRecipes(successRecipes.slice(0, MAX_RECIPES_CARDS)));
 };
 
-export const resetRecipeList = (Path) => async (dispatch) => {
-  const recipes = await requestRecipesList(Path);
+export const resetRecipeList = (nowPath) => async (dispatch) => {
+  const currentPath = nowPath === 'drinks' ? 'Drinks' : 'Foods';
+  const recipes = await requestRecipesList(currentPath);
   dispatch(setRecipes(recipes.slice(0, MAX_RECIPES_CARDS)));
 };
 

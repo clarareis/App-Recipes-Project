@@ -4,9 +4,11 @@
   flex-direction: row;
   height: 20px;
   justify-content: center;
+  position: absolute;
+  top: 150px;
   width: 360px;
+  z-index: 2;
 }
-
 
 .category_area button {
   border: none;
