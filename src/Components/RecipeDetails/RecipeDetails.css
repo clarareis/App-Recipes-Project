@@ -2,3 +2,7 @@
   bottom: 0;
   position: fixed;
 }
+
+.details_content {
+  z-index: 3;
+}

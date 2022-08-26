@@ -27,7 +27,6 @@ export const requestRecipesList = async (path) => {
   try {
     const recipeApiResponse = await fetch(endpointByPath(path));
     const successRecipesRequest = await recipeApiResponse.json();
-    console.log(successRecipesRequest);
     if (path === 'Drinks') return successRecipesRequest.drinks;
     return successRecipesRequest.meals;
   } catch (error) {

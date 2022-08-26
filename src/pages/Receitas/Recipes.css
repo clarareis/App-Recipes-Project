@@ -1,0 +1,5 @@
+.btn_start {
+  bottom: 0;
+  position: fixed;
+  z-index: 99;
+}

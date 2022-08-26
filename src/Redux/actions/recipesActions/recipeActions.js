@@ -38,10 +38,8 @@ const changePathUrlByPath = (path, category) => {
 };
 
 export const fetchRecipesByCategory = (category, path) => async (dispatch) => {
-  console.log(path);
   const recipes = await (await fetch(changePathUrlByPath(path, category))).json();
   const successRecipes = path === '/drinks' ? recipes.drinks : recipes.meals;
-  console.log(successRecipes);
   dispatch(setRecipes(successRecipes.slice(0, MAX_RECIPES_CARDS)));
 };
 

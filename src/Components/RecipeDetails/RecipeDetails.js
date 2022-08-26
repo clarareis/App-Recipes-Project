@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './RecipeDetails.css';
 import PropTypes from 'prop-types';
 import { Carousel } from 'react-bootstrap';
+import copy from 'clipboard-copy';
+import { useParams } from 'react-router-dom';
+import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
 
 const six = 6;
 
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
+
+  // useEffect(() => {
+  //   console.log(recipe);
+  // const fav = [{
+  //   id: endpoint === 'foods' ? recipe.idMeal : recipe.idDrink,
+  //   type: endpoint,
+  //   nationality: recipe.strArea,
+  //   category: recipe.strCategory,
+  //   alcoholicOrNot: endpoint === 'foods' ? false : recipe.strAlcoholic,
+  //   name: endpoint === 'foods' ? recipe.strMeal : recipe.strDrink,
+  //   image: endpoint === 'foods' ? recipe.strMealThumb : recipe.strDrinkThumb,
+  // }];
+  // }, []);
   const recipesIncrements = () => {
     const allRecipes = [];
     const vinteIngredientes = 20;
@@ -25,13 +41,42 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
     }
     return <ul>{allRecipes}</ul>;
   };
-  console.log(recipe);
-  // Req 31
+
+  const { id } = useParams();
 
   const seisReceitas = recomendacao.filter((e, i) => i < six);
   // para fazer o carrossel utilizei esse link//https://react-bootstrap.github.io/components/carousel/
+  const [msg, setMsg] = useState(false);
+
+  const MSG_TIMEOUT = 3000;
+
+  const shareRecipe = (type) => {
+    copy(`${window.location.origin}/${type}/${id}`);
+    setMsg(true);
+    setTimeout(() => setMsg(false), MSG_TIMEOUT);
+  };
+
+  const saveInFavorite = () => {
+    const favorites = getLocalStore('favoriteRecipes') || [];
+    const fav = {
+      id: endpoint === 'foods' ? recipe.idMeal : recipe.idDrink,
+      type: endpoint === 'foods' ? 'food' : 'drink',
+      nationality: recipe.strArea ? recipe.strArea : '',
+      category: recipe.strCategory,
+      alcoholicOrNot: endpoint === 'foods' ? '' : recipe.strAlcoholic,
+      name: endpoint === 'foods' ? recipe.strMeal : recipe.strDrink,
+      image: endpoint === 'foods' ? recipe.strMealThumb : recipe.strDrinkThumb,
+    };
+    console.log(fav);
+    const addItem = [...favorites, fav];
+
+    updateLocalStore('favoriteRecipes', addItem);
+  };
+
   return (
-    <div>
+    <div
+      className="details_content"
+    >
       <h1
         className="recipeContent"
         data-testid="recipe-title"
@@ -49,6 +94,22 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
       <p data-testid="recipe-category">
         {recipe[category]}
       </p>
+      {msg && <p>Link copied!</p>}
+
+      <button
+        onClick={ () => shareRecipe(endpoint) }
+        type="button"
+        data-testid="share-btn"
+      >
+        Share
+      </button>
+      <button
+        onClick={ saveInFavorite }
+        type="button"
+        data-testid="favorite-btn"
+      >
+        Favorite
+      </button>
       <p data-testid="instructions">{recipe.strInstructions}</p>
       { recipesIncrements() }
       {recipe.strYoutube && <iframe

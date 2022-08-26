@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 function RecomenationDrinks({ recomendation, i }) {
   const { strDrink, strDrinkThumb } = recomendation;
-  console.log(recomendation);
   return (
     <div>
       <h5

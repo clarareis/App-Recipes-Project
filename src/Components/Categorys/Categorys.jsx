@@ -21,7 +21,6 @@ function Categorys() {
   const requestCategory = async () => {
     const nowCategorys = await requestCategorys(history.location.pathname);
     setCategorys([...nowCategorys, { strCategory: 'All' }]);
-    console.log(nowCategorys);
   };
 
   useEffect(() => {

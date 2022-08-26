@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import RecipeDetails from '../../Components/RecipeDetails/RecipeDetails';
 import '../../Components/RecipeDetails/RecipeDetails.css';
-import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
 import { endpointByIdDrinks,
   endpointByIdFood,
   endpointDrinkRecomendation,
   endpointFoodRecomendation } from '../../services/_end_points';
+import './Recipes.css';
 
 function Recipes() {
   const history = useHistory();
@@ -16,12 +16,14 @@ function Recipes() {
   const [recomendacao, setRecomendacao] = useState([]);
   const [TextRecipes, setTextRecipes] = useState('Start Recipe');
   const [recipe, setRecipes] = useState({});
+  const [showBtn, setShowBtn] = useState(true);
   // const [buttonDisable, setButtonDisable] = useState(false);
   const { id } = useParams();
 
   // const inProgressRecipes = getLocalStore('inProgressRecipes');
   // const [Receita, setReceita] = useState([]);
-  const endpointType = endpoint === 'foods' ? 'foods' : 'drinks';
+  // const endpointType = endpoint === 'foods' ? 'foods' : 'drinks';
+  const keyOfInprogress = endpoint === 'foods' ? 'meals' : 'cocktails';
   const keys = {
     name: (endpoint === 'foods') ? 'strMeal' : 'strDrink',
     img: (endpoint === 'foods') ? 'strMealThumb' : 'strDrinkThumb',
@@ -29,8 +31,11 @@ function Recipes() {
   };
 
   const checkDoneRecipe = () => {
-    const result = getLocalStore('doneRecipes');
-    return result.some((item) => item.id === id);
+    const result = JSON.parse(localStorage.getItem('doneRecipes'));
+    const isDone = result && result.some((item) => item.id === id);
+    if (isDone) {
+      setShowBtn(false);
+    }
   };
 
   // const { idMeal, idDrink } = recipe;
@@ -42,38 +47,35 @@ function Recipes() {
 
     const newItem = {
       ...getItemLocalStorage,
-      [endpointType]: { ...getItemLocalStorage[endpointType],
+      [keyOfInprogress]: { ...getItemLocalStorage[keyOfInprogress],
         [id]: [] } };
 
     localStorage.setItem('inProgressRecipes', JSON.stringify(newItem));
 
-    history.push(`${pathname}-in-progress`);
+    history.push(`${pathname}/in-progress`);
   };
 
-  const button = () => {
+  const verifyIsProgress = () => {
     if (localStorage.getItem('inProgressRecipes')) {
       const progres = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      console.log(progres);
-      // const verification = Object.keys(progres[endpointType])
-      //   .some((item) => item === id);
-      // if (verification) {
-      //   setTextRecipes('Continue Recipe');
-      // }
+      const verification = Object.keys(progres[keyOfInprogress])
+        .some((item) => item === id);
+      if (verification) {
+        setTextRecipes('Continue Recipe');
+      }
     }
-    // asdasd
   };
 
   useEffect(() => {
-    button();
+    verifyIsProgress();
     checkDoneRecipe();
-    // localStorageStartRecipes();
-    localStorageDoneRecipes();
   }, []);
 
   useEffect(() => {
     const testFoodOrDrink = async () => {
       if (endpoint === 'foods') {
-        setRecipes(await endpointByIdFood(id));
+        const fetchRecipes = await endpointByIdFood(id);
+        setRecipes(fetchRecipes);
         setRecomendacao(await endpointFoodRecomendation());
       } if (endpoint === 'drinks') {
         setRecomendacao(await endpointDrinkRecomendation());
@@ -84,14 +86,19 @@ function Recipes() {
   }, []);
   return (
     <>
-      <button
-        type="button"
-        className="startRecipeBtn"
-        data-testid="start-recipe-btn"
-        onClick={ () => saveId() }
-      >
-        {TextRecipes}
-      </button>
+      {
+        showBtn && (
+          <button
+            className="btn_start"
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => saveId() }
+          >
+            {TextRecipes}
+          </button>
+        )
+      }
+
       <RecipeDetails
         keys={ keys }
         endpoint={ endpoint }
