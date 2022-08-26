@@ -30,7 +30,7 @@ function Recipes() {
 
   const checkDoneRecipe = () => {
     const result = getLocalStore('doneRecipes');
-    return result?.some((item) => item.id === id);
+    return result.some((item) => item.id === id);
   };
 
   // const { idMeal, idDrink } = recipe;
@@ -60,6 +60,7 @@ function Recipes() {
       //   setTextRecipes('Continue Recipe');
       // }
     }
+    // asdasd
   };
 
   useEffect(() => {
