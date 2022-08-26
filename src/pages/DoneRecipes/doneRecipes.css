@@ -14,7 +14,7 @@
   width: 360px;
 }
 
-.recipes_cards_caontainer {
+.recipes_cards_container {
   display: flex;
   flex-direction: column;
   width: 360px;

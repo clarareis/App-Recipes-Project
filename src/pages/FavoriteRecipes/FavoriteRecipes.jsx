@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import Header from '../../Components/Header';
 import icon from '../../images/shareIcon.svg';
-import './doneRecipes.css';
+import favIcon from '../../images/blackHeartIcon.svg';
 
-function DoneRecipes() {
-  const localRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+function FavoriteRecipes() {
   const [typeBtn, setTypeBtn] = useState('');
   const [msg, setMsg] = useState(false);
+  const [fav, setFav] = useState([]);
 
   const MSG_TIMEOUT = 3000;
 
@@ -18,12 +18,22 @@ function DoneRecipes() {
     setTimeout(() => setMsg(false), MSG_TIMEOUT);
   };
 
+  const selectedFav = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  useEffect(() => {
+    setFav(selectedFav);
+  }, []);
+
+  const removeFavorites = (id) => {
+    const selectedRecipe = selectedFav.filter((recipe) => recipe.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(selectedRecipe));
+    console.log(selectedRecipe);
+    setFav(selectedRecipe);
+  };
+
   return (
-    <div
-      className="done_recipes_container"
-    >
-      <Header headerName="Done Recipes" />
-      <h3>DoneRecipe</h3>
+    <div>
+      <Header headerName="Favorite Recipes" />
+      <h1>FavoriteRecipes</h1>
       <section
         className="btn_filter_area"
       >
@@ -56,7 +66,7 @@ function DoneRecipes() {
         className="recipes_cards_container"
       >
         {msg && <p>Link copied!</p>}
-        {localRecipes && localRecipes.filter((element) => (!typeBtn ? element
+        {fav && fav.filter((element) => (!typeBtn ? element
           : element.type === typeBtn))
           .map((recipe, index) => (
             <div key={ index }>
@@ -83,25 +93,20 @@ function DoneRecipes() {
                 </h5>
               </Link>
 
-              <p data-testid={ `${index}-horizontal-done-date` }>
-                done in:
-                { recipe.doneDate }
-              </p>
-
-              {recipe.tags.map((tag) => (
-                <p
-                  key={ tag }
-                  data-testid={ `${index}-${tag}-horizontal-tag` }
-                >
-                  { tag }
-                </p>
-              ))}
               <input
                 data-testid={ `${index}-horizontal-share-btn` }
                 type="image"
                 src={ icon }
                 alt="shareIcon"
                 onClick={ () => shareRecipe(recipe.type, recipe.id) }
+              />
+
+              <input
+                data-testid={ `${index}-horizontal-favorite-btn` }
+                type="image"
+                src={ favIcon }
+                alt="shareIcon"
+                onClick={ () => removeFavorites(recipe.id) }
               />
             </div>
           ))}
@@ -110,5 +115,4 @@ function DoneRecipes() {
     </div>
   );
 }
-
-export default DoneRecipes;
+export default FavoriteRecipes;
