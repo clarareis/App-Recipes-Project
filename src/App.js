@@ -41,7 +41,6 @@ function App() {
         <Route component={ FavoriteRecipe } path="/favorite-recipes" exact />
       </Switch>
     </main>
-
   );
 }
 

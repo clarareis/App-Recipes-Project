@@ -60,6 +60,7 @@ function Recipes() {
       const progres = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const verification = Object.keys(progres[keyOfInprogress])
         .some((item) => item === id);
+      console.log(verification);
       if (verification) {
         setTextRecipes('Continue Recipe');
       }

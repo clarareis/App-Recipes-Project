@@ -94,22 +94,7 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
       <p data-testid="recipe-category">
         {recipe[category]}
       </p>
-      {msg && <p>Link copied!</p>}
 
-      <button
-        onClick={ () => shareRecipe(endpoint) }
-        type="button"
-        data-testid="share-btn"
-      >
-        Share
-      </button>
-      <button
-        onClick={ saveInFavorite }
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Favorite
-      </button>
       <p data-testid="instructions">{recipe.strInstructions}</p>
       { recipesIncrements() }
       {recipe.strYoutube && <iframe
@@ -120,7 +105,24 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
         frameBorder="0"
         title="videos "
       />}
+      {msg && <p>Link copied!</p>}
 
+      <button
+        onClick={ () => shareRecipe(endpoint) }
+        type="button"
+        className="shareBtn"
+        data-testid="share-btn"
+      >
+        Share
+      </button>
+      <button
+        onClick={ saveInFavorite }
+        type="button"
+        className="favoriteBtn"
+        data-testid="favorite-btn"
+      >
+        Favorite
+      </button>
       <Carousel>
         { seisReceitas.map((receitas, i) => {
           const { strDrink, strDrinkThumb, strMeal, strMealThumb } = receitas;
