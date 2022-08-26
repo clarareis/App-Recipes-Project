@@ -45,6 +45,7 @@ function SearchBar({ nameOfItem, showSearch, setNameOfItem }) {
             onChange={ ({ target }) => setNameOfItem(target.value) }
             data-testid="search-input"
             value={ nameOfItem }
+            name="search"
           />
         )
       }

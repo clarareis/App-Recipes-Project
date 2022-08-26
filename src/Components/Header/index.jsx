@@ -4,8 +4,8 @@ import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import SearchIcon from '../../images/searchIcon.svg';
-import SearchBar from '../SearchBar';
 import Categorys from '../Categorys/Categorys';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header({ headerName }) {
   const history = useHistory();

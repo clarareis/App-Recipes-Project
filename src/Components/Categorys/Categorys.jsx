@@ -21,7 +21,6 @@ function Categorys() {
   const requestCategory = async () => {
     const nowCategorys = await requestCategorys(history.location.pathname);
     setCategorys([...nowCategorys, { strCategory: 'All' }]);
-    console.log(nowCategorys);
   };
 
   useEffect(() => {
@@ -30,14 +29,12 @@ function Categorys() {
 
   const getRecipeByCategory = (category) => {
     if (category === 'All') {
-      const currentPath = nowPath === 'drinks' ? 'Drinks' : 'Foods';
-      dispatch(resetRecipeList(currentPath));
+      dispatch(resetRecipeList(nowPath));
       setCurrentCategoryReference('');
       return;
     }
     if (currentCategoryReference === category) {
-      const currentPath = nowPath === 'drinks' ? 'Drinks' : 'Foods';
-      dispatch(resetRecipeList(currentPath));
+      dispatch(resetRecipeList(nowPath));
       setCurrentCategoryReference('');
       return;
     }
@@ -53,7 +50,7 @@ function Categorys() {
       className="category_area"
     >
       {
-        categorys.length && categorys.map((currentCategory) => (
+        categorys.map((currentCategory) => (
           <button
             data-testid={ `${currentCategory.strCategory}-category-filter` }
             style={ {
@@ -65,6 +62,7 @@ function Categorys() {
             onClick={ () => getRecipeByCategory(currentCategory.strCategory) }
             type="button"
             key={ currentCategory.strCategory }
+            name={ currentCategory.strCategory }
           >
             {currentCategory.strCategory}
           </button>
