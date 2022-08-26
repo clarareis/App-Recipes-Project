@@ -4,7 +4,11 @@
   flex-direction: row;
   height: 20px;
   justify-content: center;
+  margin-top: 20px;
+  position: fixed;
+  top: 120px;
   width: 360px;
+  z-index: 2;
 }
 
 

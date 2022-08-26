@@ -8,6 +8,7 @@
   position: fixed;
   top: 0;
   width: 360px;
+  z-index: 1;
 }
 
 .header_content h2 {

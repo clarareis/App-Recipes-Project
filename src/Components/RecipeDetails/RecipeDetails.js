@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RecomendationFoods from '../Recomendation/RecomendationFoods';
 import RecomenationDrinks from '../Recomendation/RecomendationDrinks';
-import './RecipeDetails.css';
 
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
@@ -25,10 +24,6 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
 
     return <ul>{allRecipes}</ul>;
   };
-
-  // function startRecipes() {
-
-  // }
 
   return (
     <div>
@@ -68,14 +63,6 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
           }
         </div>
       ))}
-      <button
-        type="button"
-        className="start-recipe-btn"
-        data-testid="start-recipe-btn"
-        // onClick={ () => startRecipes() }
-      >
-        Start Recipe
-      </button>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import Categorys from '../../Components/Categorys/Categorys';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header';
 import Recipes from '../../Components/Recipes/Recipes';
@@ -17,6 +18,7 @@ function Foods() {
       className="foods_content"
     >
       <Header headerName="Foods" />
+      <Categorys />
       <Recipes recipeType="Foods" />
       <Footer />
     </section>

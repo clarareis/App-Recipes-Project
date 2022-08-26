@@ -19,6 +19,7 @@ function Categorys() {
   }, [history.location.pathname]);
 
   const requestCategory = async () => {
+    console.log(history.location.pathname);
     const nowCategorys = await requestCategorys(history.location.pathname);
     setCategorys([...nowCategorys, { strCategory: 'All' }]);
   };
