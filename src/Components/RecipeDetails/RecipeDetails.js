@@ -7,7 +7,6 @@ const six = 6;
 
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
-  // const [] = useState([]);
   const recipesIncrements = () => {
     const allRecipes = [];
     const vinteIngredientes = 20;

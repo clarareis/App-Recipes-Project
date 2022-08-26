@@ -14,76 +14,60 @@ function Recipes() {
   const lastI = pathname.lastIndexOf('/');
   const endpoint = pathname.slice(1, lastI);
   const [recomendacao, setRecomendacao] = useState([]);
+  const [TextRecipes, setTextRecipes] = useState('Start Recipe');
   const [recipe, setRecipes] = useState({});
   // const [buttonDisable, setButtonDisable] = useState(false);
   const { id } = useParams();
 
-  const inProgressRecipes = getLocalStore('inProgressRecipes');
+  // const inProgressRecipes = getLocalStore('inProgressRecipes');
   // const [Receita, setReceita] = useState([]);
-
+  const endpointType = endpoint === 'foods' ? 'foods' : 'drinks';
   const keys = {
     name: (endpoint === 'foods') ? 'strMeal' : 'strDrink',
     img: (endpoint === 'foods') ? 'strMealThumb' : 'strDrinkThumb',
     category: (endpoint === 'foods') ? 'strCategory' : 'strAlcoholic',
   };
 
-  const localStorageDoneRecipes = () => {
-    const { idMeal, idDrink, strTags, strCategory,
-      strMealThumb, strDrinkThumb,
-      strDrink, strMeal, strArea, strAlcoholic } = recipe;
-      // else ternario com o pype
-    const doneRecipes = getLocalStore('doneRecipes') || [];
-    updateLocalStore('doneRecipes', [...doneRecipes, {
-      id: endpoint === 'foods' ? idMeal : idDrink,
-      type: strTags,
-      nationality: strArea,
-      category: strCategory,
-      alcoholicOrNot: endpoint === 'foods' ? 'Food Dont Have alcool' : strAlcoholic,
-      name: endpoint === 'foods' ? strMeal : strDrink,
-      image: endpoint === 'foods' ? strMealThumb : strDrinkThumb,
-      doneDate: '',
-      tags: strTags,
-    }]);
+  const checkDoneRecipe = () => {
+    const result = getLocalStore('doneRecipes');
+    return result?.some((item) => item.id === id);
   };
 
   // const { idMeal, idDrink } = recipe;
 
-  const getItemLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  console.log(getItemLocalStorage);
-  const { idDrink, idMeal } = recipe;
   // updateLocalStore('inProgressRecipes',
   const saveId = () => {
-    const getDrinksAndMels = {
+    const getItemLocalStorage = localStorage.getItem('inProgressRecipes')
+      ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {};
+
+    const newItem = {
       ...getItemLocalStorage,
-      cocktails: {
-        ...getItemLocalStorage.cocktails,
-        idDrink,
-      },
-      meals: {
-        ...getItemLocalStorage.meals,
-        idMeal,
-      },
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(getDrinksAndMels));
+      [endpointType]: { ...getItemLocalStorage[endpointType],
+        [id]: [] } };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newItem));
+
+    history.push(`${pathname}-in-progress`);
   };
-  const localStorageStartRecipes = () => {
-    if (endpoint === 'foods') {
-      const ids = Object.keys(inProgressRecipes.meals);
-      return ids.includes(id);
+
+  const button = () => {
+    if (localStorage.getItem('inProgressRecipes')) {
+      const progres = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      console.log(progres);
+      // const verification = Object.keys(progres[endpointType])
+      //   .some((item) => item === id);
+      // if (verification) {
+      //   setTextRecipes('Continue Recipe');
+      // }
     }
-    const idsArrays = Object.keys(inProgressRecipes.cocktails);
-    return idsArrays.includes(id);
   };
 
-  const isRecipesProgress = getItemLocalStorage;
-
-  const text = isRecipesProgress ? 'Continue Recipe' : 'Start Recipe';
-
-  const startRecipe = () => {
-    saveId();
-    localStorageStartRecipes();
-    // history.push(`/${endpoint}/${id}-in-progress`);
-  };
+  useEffect(() => {
+    button();
+    checkDoneRecipe();
+    // localStorageStartRecipes();
+    localStorageDoneRecipes();
+  }, []);
 
   useEffect(() => {
     const testFoodOrDrink = async () => {
@@ -103,9 +87,9 @@ function Recipes() {
         type="button"
         className="startRecipeBtn"
         data-testid="start-recipe-btn"
-        onClick={ () => startRecipe() }
+        onClick={ () => saveId() }
       >
-        {text}
+        {TextRecipes}
       </button>
       <RecipeDetails
         keys={ keys }
