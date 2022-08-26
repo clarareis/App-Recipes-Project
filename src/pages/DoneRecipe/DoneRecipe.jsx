@@ -3,6 +3,7 @@ import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import Header from '../../Components/Header';
 import icon from '../../images/shareIcon.svg';
+import './doneRecipes.css';
 
 function DoneRecipe() {
   const localRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -18,34 +19,42 @@ function DoneRecipe() {
   };
 
   return (
-    <div>
+    <div
+      className="done_recipes_container"
+    >
       <Header headerName="Done Recipes" />
-      <h1>DoneRecipe</h1>
-      <button
-        data-testid="filter-by-all-btn"
-        type="button"
-        onClick={ () => setTypeBtn('') }
+      <h3>DoneRecipe</h3>
+      <section
+        className="btn_filter_area"
       >
-        All
-      </button>
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => setTypeBtn('') }
+        >
+          All
+        </button>
 
-      <button
-        data-testid="filter-by-food-btn"
-        type="button"
-        onClick={ () => setTypeBtn('food') }
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={ () => setTypeBtn('food') }
+        >
+          Food
+        </button>
+
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={ () => setTypeBtn('drink') }
+        >
+          Drinks
+        </button>
+
+      </section>
+      <section
+        className="recipes_cards_caontainer"
       >
-        Food
-      </button>
-
-      <button
-        data-testid="filter-by-drink-btn"
-        type="button"
-        onClick={ () => setTypeBtn('drink') }
-      >
-        Drinks
-      </button>
-
-      <section>
         {msg && <p>Link copied!</p>}
         {localRecipes && localRecipes.filter((element) => (!typeBtn ? element
           : element.type === typeBtn))

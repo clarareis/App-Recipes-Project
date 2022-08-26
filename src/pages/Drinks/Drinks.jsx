@@ -5,6 +5,7 @@ import Recipes from '../../Components/Recipes';
 import { fetchRecipeList } from '../../Redux/actions/recipesActions/recipeActions';
 import './Drinks.css';
 import Footer from '../../Components/Footer/Footer';
+import Categorys from '../../Components/Categorys/Categorys';
 
 function Drinks() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function Drinks() {
       className="drinks_content"
     >
       <Header headerName="Drinks" />
+      <Categorys />
       <Recipes recipeType="Drinks" />
       <Footer />
     </section>
