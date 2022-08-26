@@ -133,8 +133,7 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
                 data-testid={ `${i}-recomendation-card` }
               >
                 <img
-                  width="200px"
-                  heigth="200"
+                  width="360px"
                   alt={ strDrink }
                   src={ strDrinkThumb }
                 />
@@ -147,8 +146,7 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
                 data-testid={ `${i}-recomendation-card` }
               >
                 <img
-                  width="100%"
-                  heigth="200"
+                  width="360px"
                   alt={ strMeal }
                   src={ strMealThumb }
                 />

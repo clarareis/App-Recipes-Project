@@ -1,25 +1,27 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './RenderWith';
-import Foods from '../pages/Foods/Foods';
+import Header from '../Components/Header';
+import App from '../App';
 
 const searchInputId = 'search-input';
 const userBtnId = 'profile-top-btn';
 const showSearchBtnId = 'search-top-btn';
+const searchBtnId = 'exec-search-btn';
 
-// beforeEach(() => {
-//   jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-//     json: () => Promise.resolve(),
-//   }));
-// });
+beforeEach(() => {
+  // jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+  //   json: () => Promise.resolve(),
+  // }));
+});
 afterEach(() => {
   jest.resetAllMocks();
 });
 
 describe('Testando o componente Header', () => {
   test('Testando compoentes em tela', () => {
-    renderWithRouterAndRedux(<Foods />);
+    renderWithRouterAndRedux(<Header />);
 
     const header = screen.getByTestId('page-title');
     const profileBtn = screen.getByTestId(userBtnId);
@@ -30,7 +32,7 @@ describe('Testando o componente Header', () => {
   });
 
   test('testa se o search é exibido em tela', () => {
-    renderWithRouterAndRedux(<Foods />);
+    renderWithRouterAndRedux(<Header />);
 
     const search = screen.getByTestId(showSearchBtnId);
     userEvent.click(search);
@@ -41,7 +43,7 @@ describe('Testando o componente Header', () => {
   });
 
   test('testando se o userBtn redireciona para pagina de usuario', () => {
-    const { history } = renderWithRouterAndRedux(<Foods />);
+    const { history } = renderWithRouterAndRedux(<Header />);
 
     const userBtn = screen.getByTestId(userBtnId);
     userEvent.click(userBtn);
@@ -49,10 +51,9 @@ describe('Testando o componente Header', () => {
   });
 
   test('testando se search aparece na pagina de profile', async () => {
-    const { history } = renderWithRouterAndRedux(<Foods />);
-
-    const userBtn = screen.getByTestId(userBtnId);
-    await waitFor(() => userEvent.click(userBtn));
-    expect(history.location.pathname).toBe('/profile');
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/profile');
+    const searchInput = screen.getByTestId(searchBtnId);
+    expect(searchInput).toBeInTheDocument();
   });
 });

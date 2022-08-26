@@ -13,15 +13,6 @@ const nameBtnId = 'name-search-radio';
 const firsLetterBtnId = 'first-letter-search-radio';
 const searchBtnId = 'exec-search-btn';
 
-// beforeEach(() => {
-//   jest.spyOn(global, 'alert').mockImplementationOnce(() => Promise.resolve({
-//     json: () => Promise.resolve(),
-//   }));
-// });
-afterEach(() => {
-  jest.resetAllMocks();
-});
-
 describe('test in search component', () => {
   test('verify components in screen', () => {
     const { history } = renderWithRouterAndRedux(<App />);
@@ -79,7 +70,7 @@ describe('test in search component', () => {
   test('test name search', async () => {
     global.fetch = async () => ({
       json: async () => ({
-        meals: ingredientMock.meals,
+        meals: ingredientMock.meal,
       }),
     });
     const { history } = renderWithRouterAndRedux(<App />);
