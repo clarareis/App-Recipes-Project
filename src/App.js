@@ -8,7 +8,7 @@ import Foods from './pages/Foods/Foods';
 import Drinks from './pages/Drinks/Drinks';
 import profile from './pages/Profile/Profile';
 
-import FavoriteRecipe from './pages/FavoriteRecipe/FavoriteRecipe';
+import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
 import ProgressFood from './pages/ProgressFood/ProgressFood';
 import DrinkProgress from './pages/DrinkProgress/DrinkProgress';
 import Receitas from './pages/Receitas/receitas';
@@ -38,7 +38,7 @@ function App() {
         />
         <Route component={ profile } path="/profile" exact />
         <Route component={ DoneRecipes } path="/done-recipes" exact />
-        <Route component={ FavoriteRecipe } path="/favorite-recipes" exact />
+        <Route component={ FavoriteRecipes } path="/favorite-recipes" exact />
       </Switch>
     </main>
 
