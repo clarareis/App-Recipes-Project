@@ -5,7 +5,7 @@ import Header from '../../Components/Header';
 import icon from '../../images/shareIcon.svg';
 import './doneRecipes.css';
 
-function DoneRecipe() {
+function DoneRecipes() {
   const localRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
   const [typeBtn, setTypeBtn] = useState('');
   const [msg, setMsg] = useState(false);
@@ -111,4 +111,4 @@ function DoneRecipe() {
   );
 }
 
-export default DoneRecipe;
+export default DoneRecipes;

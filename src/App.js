@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
-import DoneRecipe from './pages/DoneRecipe/DoneRecipe';
+import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
 import Foods from './pages/Foods/Foods';
 import Drinks from './pages/Drinks/Drinks';
 import profile from './pages/Profile/Profile';
@@ -37,7 +37,7 @@ function App() {
           exact
         />
         <Route component={ profile } path="/profile" exact />
-        <Route component={ DoneRecipe } path="/done-recipes" exact />
+        <Route component={ DoneRecipes } path="/done-recipes" exact />
         <Route component={ FavoriteRecipe } path="/favorite-recipes" exact />
       </Switch>
     </main>
