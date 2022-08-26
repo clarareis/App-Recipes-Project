@@ -19,20 +19,3 @@
   flex-direction: column;
   width: 360px;
 }
-
-.recipes_card {
-  align-items: flex;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 360px;
-}
-
-.inf_card {
-  display: flex;
-  flex-direction: row;
-}
-
-.inf_card img {
-  width: 30px;
-}
