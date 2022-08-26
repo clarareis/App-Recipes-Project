@@ -41,7 +41,7 @@ export const ingredientMock = {
       idMeal: '52820',
     },
     {
-      strMeal: 'Rappie Pie',
+      strMeal: 'Rappiee Pie',
       strMealThumb: 'https://www.themealdb.com/images/media/meals/ruwpww1511817242.jpg',
       idMeal: '52933',
     },
