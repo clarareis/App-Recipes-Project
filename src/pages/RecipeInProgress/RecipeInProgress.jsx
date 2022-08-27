@@ -4,15 +4,15 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import copy from 'clipboard-copy';
 import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
-import { setProgress, setProgressInStore, updateProgressInStore } from '../../Redux/actions/recipesActions/recipeCprogressAction';
-import { endpointByIdDrinks, endpointByIdFood, endpointDrinkRecomendation } from '../../services/_end_points';
+import { setProgressInStore,
+  updateProgressInStore } from '../../Redux/actions/recipesActions/recipeCprogressAction';
+import { endpointByIdDrinks, endpointByIdFood } from '../../services/_end_points';
 import favIcon from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
 
 function RecipeInProgress() {
   const [currRecipe, setCurrRecipe] = useState({});
   const currProgress = useSelector((state) => state.recipeReducer.progress);
-  const enableBtn = useSelector((state) => state.recipeReducer.btnDone);
   const [doneBtn, setDoneBtn] = useState(true);
   const [copied, setCopied] = useState(false);
   const { id } = useParams();
@@ -175,29 +175,23 @@ function RecipeInProgress() {
     copy(`${window.location.origin}/${keyOfInprogress() === 'meals'
       ? 'foods' : 'drinks'}/${id}`);
     setTimeout(() => setCopied(false), MSG_TIMEOUT);
-    // http://localhost:3000/drinks/178319
-    // http://localhost:3000/driks/178319
   };
 
   return (
     <section>
-      <h1
-        data-testid="recipe-title"
-      >
+      <h1 data-testid="recipe-title">
         {keyOfInprogress() === 'meals' ? currRecipe.strMeal : currRecipe.strDrink}
       </h1>
       <img
         data-testid="recipe-photo"
-        style={ {
-          width: 200,
-        } }
+        style={ { width: 200 } }
         src={ keyOfInprogress() === 'meals'
           ? currRecipe.strMealThumb : currRecipe.strDrinkThumb }
         alt={ keyOfInprogress() === 'meals' ? currRecipe.idMeal : currRecipe.idDrink }
       />
 
       <p data-testid="recipe-category">
-        {currRecipe.strCategory}
+        { currRecipe.strCategory }
       </p>
       <p>
         {keyOfInprogress() === 'meals' ? '' : currRecipe.strAlcoholic}
@@ -233,8 +227,7 @@ function RecipeInProgress() {
             />
             <span
               style={ {
-                textDecoration: nowProgress.isConclude ? 'line-through' : 'none',
-              } }
+                textDecoration: nowProgress.isConclude ? 'line-through' : 'none' } }
             >
               {nowProgress.ingredient}
             </span>
