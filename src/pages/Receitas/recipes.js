@@ -17,6 +17,7 @@ function Recipes() {
   const [TextRecipes, setTextRecipes] = useState('Start Recipe');
   const [recipe, setRecipes] = useState({});
   const [showBtn, setShowBtn] = useState(true);
+  const [ingredients, setIngredients] = useState([]);
   // const [buttonDisable, setButtonDisable] = useState(false);
   const { id } = useParams();
 
@@ -38,17 +39,27 @@ function Recipes() {
     }
   };
 
-  // const { idMeal, idDrink } = recipe;
+  const buildIngredients = async (myRecipe) => {
+    const VINTE = 20;
+    const myIngredients = [];
+    for (let i = 1; i <= VINTE; i += 1) {
+      if (myRecipe[`strIngredient${i}`]) {
+        myIngredients.push({
+          ingredient: `${myRecipe[`strMeasure${i}`]} ${myRecipe[`strIngredient${i}`]}`,
+          isConclude: false,
+        });
+      }
+      setIngredients(myIngredients);
+    }
+  };
 
-  // updateLocalStore('inProgressRecipes',
-  const saveId = () => {
+  const saveId = async () => {
     const getItemLocalStorage = localStorage.getItem('inProgressRecipes')
       ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {};
-
     const newItem = {
       ...getItemLocalStorage,
       [keyOfInprogress]: { ...getItemLocalStorage[keyOfInprogress],
-        [id]: [] } };
+        [id]: ingredients } };
 
     localStorage.setItem('inProgressRecipes', JSON.stringify(newItem));
 
@@ -76,11 +87,14 @@ function Recipes() {
     const testFoodOrDrink = async () => {
       if (endpoint === 'foods') {
         const fetchRecipes = await endpointByIdFood(id);
+        buildIngredients(await fetchRecipes);
         setRecipes(fetchRecipes);
         setRecomendacao(await endpointFoodRecomendation());
       } if (endpoint === 'drinks') {
+        const fetchRecipes = await endpointDrinkRecomendation(id);
+        buildIngredients(await fetchRecipes);
         setRecomendacao(await endpointDrinkRecomendation());
-        setRecipes(await endpointByIdDrinks(id));
+        setRecipes(fetchRecipes);
       }
     };
     testFoodOrDrink();

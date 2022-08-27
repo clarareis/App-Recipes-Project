@@ -1,0 +1,5 @@
+.progressContainer {
+  display: flex;
+  height: 100vh;
+  width: 340px;
+}

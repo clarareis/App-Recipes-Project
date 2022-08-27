@@ -9,11 +9,8 @@ import Drinks from './pages/Drinks/Drinks';
 import profile from './pages/Profile/Profile';
 
 import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
-import ProgressFood from './pages/ProgressFood/ProgressFood';
-import DrinkProgress from './pages/DrinkProgress/DrinkProgress';
 import Receitas from './pages/Receitas/recipes';
-
-const id = 'id-da-receita';
+import RecipeInProgress from './pages/RecipeInProgress/RecipeInProgress';
 
 function App() {
   return (
@@ -27,13 +24,13 @@ function App() {
         </Route>
         <Route component={ Receitas } path="/drinks/:id" exact />
         <Route
-          component={ ProgressFood }
-          path={ `/foods/${id}/in-progress` }
+          component={ RecipeInProgress }
+          path="/foods/:id/in-progress"
           exact
         />
         <Route
-          component={ DrinkProgress }
-          path={ `/drinks/${id}/in-progress` }
+          component={ RecipeInProgress }
+          path="/drinks/:id/in-progress"
           exact
         />
         <Route component={ profile } path="/profile" exact />
