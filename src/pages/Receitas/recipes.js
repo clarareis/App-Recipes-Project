@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import RecipeDetails from '../../Components/RecipeDetails/RecipeDetails';
 import '../../Components/RecipeDetails/RecipeDetails.css';
+import { updateLocalStore } from '../../LocalStore/LocalStore';
 import { endpointByIdDrinks,
   endpointByIdFood,
   endpointDrinkRecomendation,
@@ -56,6 +57,10 @@ function Recipes() {
   const saveId = async () => {
     const getItemLocalStorage = localStorage.getItem('inProgressRecipes')
       ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {};
+    if (getItemLocalStorage[keyOfInprogress][id]) {
+      history.push(`${pathname}/in-progress`);
+      return;
+    }
     const newItem = {
       ...getItemLocalStorage,
       [keyOfInprogress]: { ...getItemLocalStorage[keyOfInprogress],
@@ -75,7 +80,9 @@ function Recipes() {
       if (verification) {
         setTextRecipes('Continue Recipe');
       }
+      return;
     }
+    updateLocalStore('inProgressRecipes', { cocktails: {}, meals: {} });
   };
 
   useEffect(() => {
@@ -91,7 +98,7 @@ function Recipes() {
         setRecipes(fetchRecipes);
         setRecomendacao(await endpointFoodRecomendation());
       } if (endpoint === 'drinks') {
-        const fetchRecipes = await endpointDrinkRecomendation(id);
+        const fetchRecipes = await endpointByIdDrinks(id);
         buildIngredients(await fetchRecipes);
         setRecomendacao(await endpointDrinkRecomendation());
         setRecipes(fetchRecipes);
