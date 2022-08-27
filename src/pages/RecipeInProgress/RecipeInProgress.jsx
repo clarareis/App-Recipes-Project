@@ -32,8 +32,7 @@ function RecipeInProgress() {
     dispatch(setProgressInStore(id, history.location.pathname, setDoneBtn));
   };
 
-  const buildIngredients = async (myRecipe) => {
-    console.log(myRecipe);
+  const buildIngredients = (myRecipe) => {
     const VINTE = 20;
     const myIngredients = [];
     for (let i = 1; i <= VINTE; i += 1) {
@@ -55,19 +54,14 @@ function RecipeInProgress() {
       [keyOfInprogress()]: { ...getItemLocalStorage[keyOfInprogress()],
         [id]: ingredients } };
     localStorage.setItem('inProgressRecipes', JSON.stringify(newItem));
-    console.log(newItem);
     getProgressInLocalStorage();
-  };
-
-  const createItemInStore = () => {
-    saveInLocalStore();
   };
 
   const fetchRecipeData = async () => {
     if (history.location.pathname.includes('foods')) {
       const requestRecipe = await endpointByIdFood(id);
-      buildIngredients(await requestRecipe);
-      setCurrRecipe(await requestRecipe);
+      buildIngredients(requestRecipe);
+      setCurrRecipe(requestRecipe);
       return;
     }
     const requestRecipe = await endpointByIdDrinks(id);
@@ -144,29 +138,28 @@ function RecipeInProgress() {
     checkIsFavorite();
     if (progress) {
       if (!checkItemExist()) {
-        createItemInStore();
+        saveInLocalStore();
       }
       getProgressInLocalStorage();
     }
   }, []);
 
   useEffect(() => {
+    fetchRecipeData();
     const progress = getLocalStore('inProgressRecipes');
     checkIsFavorite();
     if (progress) {
       if (checkItemExist()) {
         return;
       }
-      createItemInStore();
+      saveInLocalStore();
     }
   }, [ingredients]);
 
   useEffect(() => {
     const progress = getLocalStore('inProgressRecipes');
     checkIsFavorite();
-    if (!progress) {
-      updateLocalStore('inProgressRecipes', { cocktails: {}, meals: {} });
-    }
+    if (!progress) updateLocalStore('inProgressRecipes', { cocktails: {}, meals: {} });
   }, []);
 
   const shareRecipe = () => {
@@ -205,7 +198,7 @@ function RecipeInProgress() {
         alt="fav"
       />
       <button
-        onClick={ () => shareRecipe() }
+        onClick={ shareRecipe }
         type="button"
         className="shareBtn"
         data-testid="share-btn"
@@ -223,6 +216,7 @@ function RecipeInProgress() {
             <input
               onChange={ () => updateCheck(index) }
               type="checkbox"
+              data-testId={ `my-check-${index}` }
               checked={ nowProgress.isConclude }
             />
             <span
