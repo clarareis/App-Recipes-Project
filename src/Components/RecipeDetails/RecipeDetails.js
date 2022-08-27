@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './RecipeDetails.css';
 import PropTypes from 'prop-types';
 import { Carousel } from 'react-bootstrap';
 import copy from 'clipboard-copy';
 import { useParams } from 'react-router-dom';
 import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
+import favIcon from '../../images/blackHeartIcon.svg';
+import whiteHeart from '../../images/whiteHeartIcon.svg';
 
 const six = 6;
 
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
+  const [isFav, setIsFav] = useState(false);
 
   // useEffect(() => {
   //   console.log(recipe);
@@ -56,6 +59,16 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
     setTimeout(() => setMsg(false), MSG_TIMEOUT);
   };
 
+  const checkIsFavorite = () => {
+    const progress = getLocalStore('favoriteRecipes') || [];
+    const verify = progress.some((currFav) => currFav.id === id);
+    if (verify) {
+      setIsFav(true);
+      return;
+    }
+    setIsFav(false);
+  };
+
   const saveInFavorite = () => {
     const favorites = getLocalStore('favoriteRecipes') || [];
     const fav = {
@@ -67,11 +80,21 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
       name: endpoint === 'foods' ? recipe.strMeal : recipe.strDrink,
       image: endpoint === 'foods' ? recipe.strMealThumb : recipe.strDrinkThumb,
     };
-    console.log(fav);
+    if (isFav) {
+      const remove = favorites.filter((currFav) => currFav.id !== id);
+      console.log(favorites);
+      updateLocalStore('favoriteRecipes', remove);
+      setIsFav(false);
+      return;
+    }
     const addItem = [...favorites, fav];
-
     updateLocalStore('favoriteRecipes', addItem);
+    setIsFav(true);
   };
+
+  useEffect(() => {
+    checkIsFavorite();
+  }, []);
 
   return (
     <div
@@ -115,14 +138,14 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
       >
         Share
       </button>
-      <button
+      <input
         onClick={ saveInFavorite }
-        type="button"
+        type="image"
         className="favoriteBtn"
         data-testid="favorite-btn"
-      >
-        Favorite
-      </button>
+        src={ isFav ? favIcon : whiteHeart }
+        alt="Like"
+      />
       <Carousel>
         { seisReceitas.map((receitas, i) => {
           const { strDrink, strDrinkThumb, strMeal, strMealThumb } = receitas;
