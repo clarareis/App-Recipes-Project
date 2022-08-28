@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import './RecipeDetails.css';
 import PropTypes from 'prop-types';
-import RecomendationFoods from '../Recomendation/RecomendationFoods';
-import RecomenationDrinks from '../Recomendation/RecomendationDrinks';
+import { Carousel } from 'react-bootstrap';
+import copy from 'clipboard-copy';
+import { useParams } from 'react-router-dom';
+import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
+import favIcon from '../../images/blackHeartIcon.svg';
+import whiteHeart from '../../images/whiteHeartIcon.svg';
+
+const six = 6;
 
 function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
   const { name, category, img } = keys;
+  const [isFav, setIsFav] = useState(false);
+
+  // useEffect(() => {
+  //   console.log(recipe);
+  // const fav = [{
+  //   id: endpoint === 'foods' ? recipe.idMeal : recipe.idDrink,
+  //   type: endpoint,
+  //   nationality: recipe.strArea,
+  //   category: recipe.strCategory,
+  //   alcoholicOrNot: endpoint === 'foods' ? false : recipe.strAlcoholic,
+  //   name: endpoint === 'foods' ? recipe.strMeal : recipe.strDrink,
+  //   image: endpoint === 'foods' ? recipe.strMealThumb : recipe.strDrinkThumb,
+  // }];
+  // }, []);
   const recipesIncrements = () => {
     const allRecipes = [];
     const vinteIngredientes = 20;
@@ -21,12 +42,64 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
         );
       }
     }
-
     return <ul>{allRecipes}</ul>;
   };
 
+  const { id } = useParams();
+
+  const seisReceitas = recomendacao.filter((e, i) => i < six);
+  // para fazer o carrossel utilizei esse link//https://react-bootstrap.github.io/components/carousel/
+  const [msg, setMsg] = useState(false);
+
+  const MSG_TIMEOUT = 3000;
+
+  const shareRecipe = (type) => {
+    copy(`${window.location.origin}/${type}/${id}`);
+    setMsg(true);
+    setTimeout(() => setMsg(false), MSG_TIMEOUT);
+  };
+
+  const checkIsFavorite = () => {
+    const progress = getLocalStore('favoriteRecipes') || [];
+    const verify = progress.some((currFav) => currFav.id === id);
+    if (verify) {
+      setIsFav(true);
+      return;
+    }
+    setIsFav(false);
+  };
+
+  const saveInFavorite = () => {
+    const favorites = getLocalStore('favoriteRecipes') || [];
+    const fav = {
+      id: endpoint === 'foods' ? recipe.idMeal : recipe.idDrink,
+      type: endpoint === 'foods' ? 'food' : 'drink',
+      nationality: recipe.strArea ? recipe.strArea : '',
+      category: recipe.strCategory,
+      alcoholicOrNot: endpoint === 'foods' ? '' : recipe.strAlcoholic,
+      name: endpoint === 'foods' ? recipe.strMeal : recipe.strDrink,
+      image: endpoint === 'foods' ? recipe.strMealThumb : recipe.strDrinkThumb,
+    };
+    if (isFav) {
+      const remove = favorites.filter((currFav) => currFav.id !== id);
+      console.log(favorites);
+      updateLocalStore('favoriteRecipes', remove);
+      setIsFav(false);
+      return;
+    }
+    const addItem = [...favorites, fav];
+    updateLocalStore('favoriteRecipes', addItem);
+    setIsFav(true);
+  };
+
+  useEffect(() => {
+    checkIsFavorite();
+  }, []);
+
   return (
-    <div>
+    <div
+      className="details_content"
+    >
       <h1
         className="recipeContent"
         data-testid="recipe-title"
@@ -44,6 +117,7 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
       <p data-testid="recipe-category">
         {recipe[category]}
       </p>
+
       <p data-testid="instructions">{recipe.strInstructions}</p>
       { recipesIncrements() }
       {recipe.strYoutube && <iframe
@@ -54,15 +128,59 @@ function RecipeDetails({ recipe, keys, endpoint, recomendacao }) {
         frameBorder="0"
         title="videos "
       />}
-      {recomendacao.map((recomendation, i) => (
-        <div key={ i }>
-          {
-            endpoint === 'Foods'
-              ? <RecomendationFoods recomendation={ recomendation } i={ i } />
-              : <RecomenationDrinks recomendation={ recomendation } i={ i } />
-          }
-        </div>
-      ))}
+      {msg && <p>Link copied!</p>}
+
+      <button
+        onClick={ () => shareRecipe(endpoint) }
+        type="button"
+        className="shareBtn"
+        data-testid="share-btn"
+      >
+        Share
+      </button>
+      <input
+        onClick={ saveInFavorite }
+        type="image"
+        className="favoriteBtn"
+        data-testid="favorite-btn"
+        src={ isFav ? favIcon : whiteHeart }
+        alt="Like"
+      />
+      <Carousel>
+        { seisReceitas.map((receitas, i) => {
+          const { strDrink, strDrinkThumb, strMeal, strMealThumb } = receitas;
+          return (
+            endpoint === 'foods' ? (
+              <Carousel.Item
+                key={ strDrink }
+                data-testid={ `${i}-recomendation-card` }
+              >
+                <img
+                  width="360px"
+                  alt={ strDrink }
+                  src={ strDrinkThumb }
+                />
+                <Carousel.Caption>
+                  <span data-testid={ `${i}-recomendation-title` }>{ strDrink }</span>
+                </Carousel.Caption>
+              </Carousel.Item>
+            ) : (
+              <Carousel.Item
+                data-testid={ `${i}-recomendation-card` }
+              >
+                <img
+                  width="360px"
+                  alt={ strMeal }
+                  src={ strMealThumb }
+                />
+                <Carousel.Caption>
+                  <span data-testid={ `${i}-recomendation-title` }>{ strMeal }</span>
+                </Carousel.Caption>
+              </Carousel.Item>
+            )
+          );
+        })}
+      </Carousel>
     </div>
   );
 }
@@ -77,6 +195,13 @@ RecipeDetails.propTypes = {
     strTags: PropTypes.string,
     strMeal: PropTypes.string,
     strYoutube: PropTypes.string,
+    idMeal: PropTypes.string,
+    idDrink: PropTypes.string,
+    strMealThumb: PropTypes.string,
+    strDrinkThumb: PropTypes.string,
+    strDrink: PropTypes.string,
+    strArea: PropTypes.string,
+    strAlcoholic: PropTypes.string,
   }).isRequired,
   keys: PropTypes.shape({
     name: PropTypes.string,

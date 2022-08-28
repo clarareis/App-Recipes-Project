@@ -13,7 +13,6 @@ function RecipeCard({ recipe, index, recipeType }) {
   };
 
   const redirectToDetails = () => (
-    // console.log(history),
     history.push(path())
   );
 
