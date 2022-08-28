@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import './Progress.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import copy from 'clipboard-copy';
 import { getLocalStore, updateLocalStore } from '../../LocalStore/LocalStore';
 import { setProgressInStore,
   updateProgressInStore } from '../../Redux/actions/recipesActions/recipeCprogressAction';
 import { endpointByIdDrinks, endpointByIdFood } from '../../services/_end_points';
 import favIcon from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
+import BtnSearch from './BtnSearch';
 
 function RecipeInProgress() {
   const [currRecipe, setCurrRecipe] = useState({});
   const currProgress = useSelector((state) => state.recipeReducer.progress);
   const [doneBtn, setDoneBtn] = useState(true);
-  const [copied, setCopied] = useState(false);
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -32,7 +31,8 @@ function RecipeInProgress() {
     dispatch(setProgressInStore(id, history.location.pathname, setDoneBtn));
   };
 
-  const buildIngredients = (myRecipe) => {
+  const buildIngredients = async (myRecipe) => {
+    console.log(myRecipe);
     const VINTE = 20;
     const myIngredients = [];
     for (let i = 1; i <= VINTE; i += 1) {
@@ -47,21 +47,25 @@ function RecipeInProgress() {
   };
 
   const saveInLocalStore = async () => {
-    const getItemLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'))
-      || {};
+    const getItemLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const newItem = {
       ...getItemLocalStorage,
       [keyOfInprogress()]: { ...getItemLocalStorage[keyOfInprogress()],
         [id]: ingredients } };
     localStorage.setItem('inProgressRecipes', JSON.stringify(newItem));
+    console.log(newItem);
     getProgressInLocalStorage();
+  };
+
+  const createItemInStore = () => {
+    saveInLocalStore();
   };
 
   const fetchRecipeData = async () => {
     if (history.location.pathname.includes('foods')) {
       const requestRecipe = await endpointByIdFood(id);
-      buildIngredients(requestRecipe);
-      setCurrRecipe(requestRecipe);
+      buildIngredients(await requestRecipe);
+      setCurrRecipe(await requestRecipe);
       return;
     }
     const requestRecipe = await endpointByIdDrinks(id);
@@ -138,37 +142,30 @@ function RecipeInProgress() {
     checkIsFavorite();
     if (progress) {
       if (!checkItemExist()) {
-        saveInLocalStore();
+        createItemInStore();
       }
       getProgressInLocalStorage();
     }
   }, []);
 
   useEffect(() => {
-    fetchRecipeData();
     const progress = getLocalStore('inProgressRecipes');
     checkIsFavorite();
     if (progress) {
       if (checkItemExist()) {
         return;
       }
-      saveInLocalStore();
+      createItemInStore();
     }
   }, [ingredients]);
 
   useEffect(() => {
     const progress = getLocalStore('inProgressRecipes');
     checkIsFavorite();
-    if (!progress) updateLocalStore('inProgressRecipes', { cocktails: {}, meals: {} });
+    if (!progress) {
+      updateLocalStore('inProgressRecipes', { cocktails: {}, meals: {} });
+    }
   }, []);
-
-  const shareRecipe = () => {
-    const MSG_TIMEOUT = 3000;
-    setCopied(true);
-    copy(`${window.location.origin}/${keyOfInprogress() === 'meals'
-      ? 'foods' : 'drinks'}/${id}`);
-    setTimeout(() => setCopied(false), MSG_TIMEOUT);
-  };
 
   return (
     <section>
@@ -197,27 +194,22 @@ function RecipeInProgress() {
         value="fav"
         alt="fav"
       />
-      <button
-        onClick={ shareRecipe }
-        type="button"
-        className="shareBtn"
-        data-testid="share-btn"
-      >
-        Share
-      </button>
+
+      <BtnSearch />
       <p data-testid="instructions">{currRecipe.strInstructions}</p>
-      {copied && (<span>Link copied!</span>)}
       {
         currProgress.map((nowProgress, index) => (
-          <section
+          <label
             data-testid={ `${index}-ingredient-step` }
             key={ nowProgress.ingredient }
+            htmlFor={ index }
           >
             <input
+              id={ index }
               onChange={ () => updateCheck(index) }
               type="checkbox"
-              data-testId={ `my-check-${index}` }
               checked={ nowProgress.isConclude }
+              name={ `recipe-check-${index}` }
             />
             <span
               style={ {
@@ -225,7 +217,7 @@ function RecipeInProgress() {
             >
               {nowProgress.ingredient}
             </span>
-          </section>
+          </label>
 
         ))
       }

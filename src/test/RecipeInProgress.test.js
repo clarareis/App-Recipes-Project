@@ -58,9 +58,8 @@ describe('tests in progress', () => {
   it('btn finish enabled if all ingredients is cheked', async () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push(drinkPath);
-
-    const firstIngredient = await screen.findByTestId('my-check-0');
-    const secondIngredient = await screen.findByTestId('my-check-1');
+    const firstIngredient = await screen.findByTestId('0-ingredient-step');
+    const secondIngredient = await screen.findByTestId('1-ingredient-step');
     const finishTbn = await screen.findByTestId(buttonFinishId);
 
     expect(finishTbn).toBeDisabled();
@@ -111,5 +110,14 @@ describe('tests in progress', () => {
     });
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/foods/53026/in-progress');
+  });
+
+  it('fav recipe', async () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/foods/52785/in-progress');
+
+    const fav = await screen.findByTestId(favbtnId);
+
+    userEvent.click(fav);
   });
 });
