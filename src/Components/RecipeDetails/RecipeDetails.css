@@ -1,0 +1,14 @@
+.startRecipeBtn {
+  bottom: 0;
+  position: fixed;
+}
+
+.details_content {
+  z-index: 3;
+}
+
+.shareBtn .favoriteBtn {
+  position: fixed;
+  top: 100;
+  z-index: 90;
+}

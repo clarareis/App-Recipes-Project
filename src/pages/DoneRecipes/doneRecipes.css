@@ -1,0 +1,21 @@
+.done_recipes_container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+}
+
+.btn_filter_area {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 290px;
+  width: 360px;
+}
+
+.recipes_cards_container {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+}

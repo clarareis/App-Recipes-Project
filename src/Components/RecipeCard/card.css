@@ -1,0 +1,15 @@
+.recipes_card {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  margin: 0.5rem;
+  margin-left: 1rem;
+  padding: 1px;
+  width: 150px;
+}
+
+.recipe_img {
+  margin-left: -1px;
+  width: 149px;
+}
